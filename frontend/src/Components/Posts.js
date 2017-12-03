@@ -1,12 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 
-const selectOptions = {
+const selectOptions = [
 {name: 'Vote score (asc.)', value: 'Vote score (asc.)'},
 {name: 'Vote score (desc.)', value: 'Vote score (desc.)'},
 {name: 'Timestamp (asc).', value: 'Timestamp (asc).'},
 {name: 'Timestamp (desc.)', value: 'Timestamp (desc.)'}
-}
+];
 
 function trim(str) {
   return str.length > 255 ? str.slice(0, 16) + '...' : str;
@@ -27,7 +27,7 @@ function Posts(props) {
       <div className='posts-list'>
         {props.posts.map(post=>(
           <h2>{post.title}</h2>
-          <span className='post-timestamp'>{post.timestamp}</span>
+          <div className='post-timestamp'>{post.timestamp}</div>
           <div className='post-votes'>
             {post.voteScore}
             <button className='vote-up'/>

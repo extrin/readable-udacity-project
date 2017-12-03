@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
-import * from '../Actions'
+import * as postActions from '../Actions/Post';
+import * as commentActions from '../Actions/Comment';
 
-function posts(state={},action) {
+function posts(state = {}, action) {
   switch (action.type) {
     case ADD_POST:
       return {};
@@ -16,7 +17,7 @@ function posts(state={},action) {
   }
 }
 
-function comments(state={}, action) {
+function comments(state = {}, action) {
   switch (action.type) {
     case ADD_COMMENT:
       return {};
