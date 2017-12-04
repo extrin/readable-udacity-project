@@ -4,13 +4,13 @@ import * as commentActions from '../Actions/Comment';
 
 function posts(state = {}, action) {
   switch (action.type) {
-    case ADD_POST:
+    case postActions.ADD_POST:
       return {};
-    case UPDATE_POST:
+    case postActions.UPDATE_POST:
       return {};
-    case REMOVE_POST:
+    case postActions.REMOVE_POST:
       return {};
-    case VOTE_ON_POST:
+    case postActions.VOTE_ON_POST:
       return {};
     default:
       return state;
@@ -19,13 +19,13 @@ function posts(state = {}, action) {
 
 function comments(state = {}, action) {
   switch (action.type) {
-    case ADD_COMMENT:
+    case commentActions.ADD_COMMENT:
       return {};
-    case UPDATE_COMMENT:
+    case commentActions.UPDATE_COMMENT:
       return {};
-    case REMOVE_COMMENT:
+    case commentActions.REMOVE_COMMENT:
       return {};
-    case VOTE_ON_COMMENT:
+    case commentActions.VOTE_ON_COMMENT:
       return {};
     default:
       return state;
