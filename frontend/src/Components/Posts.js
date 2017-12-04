@@ -20,23 +20,26 @@ function Posts(props) {
         Sort by...
         <select className="sort-select">
           {selectOptions.map(opt => (
-            <option value={opt.name}>{opt.value}</option>
+            <option value={opt.value} key={opt.name}>
+              {opt.value}
+            </option>
           ))}
         </select>
       </div>
       <div className="posts-list">
-        {props.posts.map(post => (
-          <div className="post">
-            <h2 className="post-title">{post.title}</h2>
-            <div className="post-timestamp">{post.timestamp}</div>
-            <div className="post-votes">
-              {post.voteScore}
-              <button className="vote-up">Vote Up</button>
-              <button className="vote-down">Vote Down</button>
+        {props.posts &&
+          props.posts.map(post => (
+            <div className="post">
+              <h2 className="post-title">{post.title}</h2>
+              <div className="post-timestamp">{post.timestamp}</div>
+              <div className="post-votes">
+                {post.voteScore}
+                <button className="vote-up">Vote Up</button>
+                <button className="vote-down">Vote Down</button>
+              </div>
+              <p className="post-body-cut">{trim(post.body)}</p>
             </div>
-            <p className="post-body-cut">{trim(post.body)}</p>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );
