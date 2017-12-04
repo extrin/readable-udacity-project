@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const selectOptions = [
-{name: 'Vote score (asc.)', value: 'Vote score (asc.)'},
-{name: 'Vote score (desc.)', value: 'Vote score (desc.)'},
-{name: 'Timestamp (asc).', value: 'Timestamp (asc).'},
-{name: 'Timestamp (desc.)', value: 'Timestamp (desc.)'}
+  { name: 'Vote score (asc.)', value: 'Vote score (asc.)' },
+  { name: 'Vote score (desc.)', value: 'Vote score (desc.)' },
+  { name: 'Timestamp (asc).', value: 'Timestamp (asc).' },
+  { name: 'Timestamp (desc.)', value: 'Timestamp (desc.)' }
 ];
 
 function trim(str) {
@@ -16,24 +16,26 @@ function Posts(props) {
   return (
     <div className="posts">
       <h1>Posts</h1>
-      <div className="sort">
+      <div className="posts-sort">
         Sort by...
-        <select className='sort-select'>
-          {selectOptions.map(opt=>(
+        <select className="sort-select">
+          {selectOptions.map(opt => (
             <option value={opt.name}>{opt.value}</option>
           ))}
         </select>
       </div>
-      <div className='posts-list'>
-        {props.posts.map(post=>(
-          <h2>{post.title}</h2>
-          <div className='post-timestamp'>{post.timestamp}</div>
-          <div className='post-votes'>
-            {post.voteScore}
-            <button className='vote-up'/>
-            <button className='vote-down'/>
+      <div className="posts-list">
+        {props.posts.map(post => (
+          <div className="post">
+            <h2 className="post-title">{post.title}</h2>
+            <div className="post-timestamp">{post.timestamp}</div>
+            <div className="post-votes">
+              {post.voteScore}
+              <button className="vote-up">Vote Up</button>
+              <button className="vote-down">Vote Down</button>
+            </div>
+            <p className="post-body-cut">{trim(post.body)}</p>
           </div>
-          <p className='post-body-cut'>{trim(post.body)}</p>
         ))}
       </div>
     </div>
