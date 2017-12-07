@@ -31,8 +31,9 @@ function Posts(props) {
           props.posts.map(post => (
             <div className="post">
               <h2 className="post-title">{post.title}</h2>
+              <div className="post-author">by {post.author}</div>
               <div className="post-timestamp">{post.timestamp}</div>
-              <div className="post-votes">
+              <div className="voteScore">
                 {post.voteScore}
                 <button className="vote-up">Vote Up</button>
                 <button className="vote-down">Vote Down</button>
