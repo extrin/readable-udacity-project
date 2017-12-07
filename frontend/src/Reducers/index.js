@@ -4,14 +4,16 @@ import * as commentActions from '../Actions/Comment';
 
 function posts(state = {}, action) {
   switch (action.type) {
+    case postActions.LOAD_POSTS:
+      return state;
     case postActions.ADD_POST:
-      return {};
+      return state;
     case postActions.UPDATE_POST:
-      return {};
+      return state;
     case postActions.REMOVE_POST:
-      return {};
+      return state;
     case postActions.VOTE_ON_POST:
-      return {};
+      return state;
     default:
       return state;
   }
@@ -19,14 +21,16 @@ function posts(state = {}, action) {
 
 function comments(state = {}, action) {
   switch (action.type) {
+    case commentActions.LOAD_COMMENTS:
+      return state;
     case commentActions.ADD_COMMENT:
-      return {};
+      return state;
     case commentActions.UPDATE_COMMENT:
-      return {};
+      return state;
     case commentActions.REMOVE_COMMENT:
-      return {};
+      return state;
     case commentActions.VOTE_ON_COMMENT:
-      return {};
+      return state;
     default:
       return state;
   }
