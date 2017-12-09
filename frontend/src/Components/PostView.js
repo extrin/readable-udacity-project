@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import { updatePost, removePost, voteOnPost } from '../Actions/Post';
 import { addComment } from '../Actions/Comment';
-import CommentCreate from 'CommentCreate';
+import CommentCreate from './CommentCreate';
 
 class PostView extends Component {
   state = { commentModalOpen: false };
