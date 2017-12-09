@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import { updatePost, removePost, voteOnPost } from '../Actions/Post';
 import { addComment } from '../Actions/Comment';
+import CommentCreate from 'CommentCreate'
 
 class PostView extends Component {
   state = { commentModalOpen: false };
@@ -40,7 +41,7 @@ class PostView extends Component {
         <div className="add-comment">
           <button
             onClick={() => this.openCommentModal()}
-            className="icon-add-comment-btn"
+            className="comment-add-btn"
           >
             Add new Comment
           </button>
@@ -51,19 +52,7 @@ class PostView extends Component {
             onRequestClose={this.closeCommentModal}
             contentLabel="Modal"
           >
-            <div className="comment-new">
-              <input
-                className="comment-author-input"
-                type="text"
-                placeholder="Comment Author"
-              />
-              <input
-                className="comment-body-input"
-                type="text"
-                placeholder="Comment Body"
-              />
-              <button onClick={this.addComment}>Add</button>
-            </div>
+            <CommentCreate addComment={this.addComment}/>
           </Modal>
         </div>
         <div className="post-comments">
