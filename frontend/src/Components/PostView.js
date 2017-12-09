@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import { updatePost, removePost, voteOnPost } from '../Actions/Post';
 import { addComment } from '../Actions/Comment';
-import CommentCreate from 'CommentCreate'
+import CommentCreate from 'CommentCreate';
 
 class PostView extends Component {
   state = { commentModalOpen: false };
@@ -18,7 +18,10 @@ class PostView extends Component {
       commentModalOpen: false
     }));
 
-  addComment = ({}) => ({});
+  addComment = () =>
+    this.setState(() => ({
+      commentModalOpen: false
+    }));
 
   render() {
     const { commentModalOpen } = this.state;
@@ -52,7 +55,7 @@ class PostView extends Component {
             onRequestClose={this.closeCommentModal}
             contentLabel="Modal"
           >
-            <CommentCreate addComment={this.addComment}/>
+            <CommentCreate addComment={this.addComment} />
           </Modal>
         </div>
         <div className="post-comments">
