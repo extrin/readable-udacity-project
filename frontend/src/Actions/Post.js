@@ -1,13 +1,22 @@
+import * as API from '../Util/api';
+
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const ADD_POST = 'ADD_POST';
 export const UPDATE_POST = 'UPDATE_POST';
 export const REMOVE_POST = 'REMOVE_POST';
 export const VOTE_ON_POST = 'VOTE_ON_POST';
 
-export function loadPosts() {
+export function loadPosts({ posts }) {
   return {
-    type: LOAD_POSTS
-  }
+    type: LOAD_POSTS,
+    posts
+  };
+}
+
+export function getPosts() {
+  return function(dispatch) {
+    API.getPosts().then(posts => dispatch(loadPosts(posts)));
+  };
 }
 
 export function addPost({ id, timestamp, title, body, author, category }) {
