@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import { updatePost, removePost, voteOnPost } from '../Actions/Post';
 import { addComment } from '../Actions/Comment';
 import CommentCreate from './CommentCreate';
+import Comments from './Comments';
 
 class PostView extends Component {
   state = { commentModalOpen: false };
@@ -25,20 +26,21 @@ class PostView extends Component {
 
   render() {
     const { commentModalOpen } = this.state;
+    const { voteScore, title, author, timestamp, body } = this.props;
     return (
       <div className="post-view">
         <Link to="/">Home</Link>
         <div className="post-details">
           <div className="voteScore">
-            {props.voteScore}
+            {voteScore}
             <button className="vote-up">Vote Up</button>
             <button className="vote-down">Vote Down</button>
           </div>
-          <h2 className="post-title">{props.title}</h2>
-          <div className="post-author">by {props.author}</div>
-          <div className="post-timestamp">{props.timestamp}</div>
+          <h2 className="post-title">{title}</h2>
+          <div className="post-author">by {author}</div>
+          <div className="post-timestamp">{timestamp}</div>
           <div className="post-body">
-            <p>{props.body}</p>
+            <p>{body}</p>
           </div>
         </div>
         <div className="add-comment">
