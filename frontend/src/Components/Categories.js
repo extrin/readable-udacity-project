@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 function Categories(props) {
   return (
@@ -12,4 +13,8 @@ function Categories(props) {
   );
 }
 
-export default Categories;
+const mapStateToProps = (state, props) => ({
+  categories: state.categories
+});
+
+export default connect(mapStateToProps)(Categories);

@@ -1,5 +1,6 @@
 import React from 'react';
 //import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const selectOptions = [
   { name: 'Vote score (asc.)', value: 'Vote score (asc.)' },
@@ -27,23 +28,26 @@ function Posts(props) {
         </select>
       </div>
       <div className="posts-list">
-        {props.posts &&
-          props.posts.map(post => (
-            <div className="post">
-              <h2 className="post-title">{post.title}</h2>
-              <div className="post-author">by {post.author}</div>
-              <div className="post-timestamp">{post.timestamp}</div>
-              <div className="voteScore">
-                {post.voteScore}
-                <button className="vote-up">Vote Up</button>
-                <button className="vote-down">Vote Down</button>
-              </div>
-              <p className="post-body-cut">{trim(post.body)}</p>
+        {props.posts.map(post => (
+          <div className="post">
+            <h2 className="post-title">{post.title}</h2>
+            <div className="post-author">by {post.author}</div>
+            <div className="post-timestamp">{post.timestamp}</div>
+            <div className="voteScore">
+              {post.voteScore}
+              <button className="vote-up">Vote Up</button>
+              <button className="vote-down">Vote Down</button>
             </div>
-          ))}
+            <p className="post-body-cut">{trim(post.body)}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-export default Posts;
+const mapStateToProps = (state, props) => ({
+  posts: state.posts
+});
+
+export default connect(mapStateToProps)(Posts);
