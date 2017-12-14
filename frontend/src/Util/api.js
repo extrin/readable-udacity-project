@@ -38,7 +38,7 @@ export function createPost(id, timestamp, title, body, author, category) {
     headers: headers,
     body: `id=${id}&timestamp=${timestamp}&title=${title}&body=${body}&author=${author}&category=${category}`
   })
-    .then(json)
+    .then(res => res.json())
     .then(function(data) {
       console.log('Request succeeded with JSON response', data);
     })
@@ -54,7 +54,7 @@ export function voteOnPost(id, option) {
     headers: headers,
     body: `option=${option}`
   })
-    .then(json)
+    .then(res => res.json())
     .then(function(data) {
       console.log('Request succeeded with JSON response', data);
     })
@@ -70,7 +70,7 @@ export function updatePost(id, title, body) {
     headers: headers,
     body: `title=${title}&body=${body}`
   })
-    .then(json)
+    .then(res => res.json())
     .then(function(data) {
       console.log('Request succeeded with JSON response', data);
     })
@@ -85,7 +85,7 @@ export function deletePost(id) {
     method: 'delete',
     headers: headers
   })
-    .then(json)
+    .then(res => res.json())
     .then(function(data) {
       console.log('Request succeeded with JSON response', data);
     })
@@ -95,7 +95,7 @@ export function deletePost(id) {
 }
 
 export function getComments(postId) {
-  const endpoint = `/posts/:${id}/comments`;
+  const endpoint = `/posts/:${postId}/comments`;
   return fetch(baseUrl + endpoint, { headers }).then(res => res.json());
 }
 
@@ -111,7 +111,7 @@ export function createComment(postId, id, timestamp, author, body) {
     headers: headers,
     body: `id=${id}&timestamp=${timestamp}&body=${body}&author=${author}&parentId=${postId}`
   })
-    .then(json)
+    .then(res => res.json())
     .then(function(data) {
       console.log('Request succeeded with JSON response', data);
     })
@@ -127,7 +127,7 @@ export function voteOnComment(id, option) {
     headers: headers,
     body: `option=${option}`
   })
-    .then(json)
+    .then(res => res.json())
     .then(function(data) {
       console.log('Request succeeded with JSON response', data);
     })
@@ -143,7 +143,7 @@ export function updateComment(id, timestamp, body) {
     headers: headers,
     body: `timestamp=${timestamp}&body=${body}`
   })
-    .then(json)
+    .then(res => res.json())
     .then(function(data) {
       console.log('Request succeeded with JSON response', data);
     })
@@ -158,7 +158,7 @@ export function deleteComment(id) {
     method: 'delete',
     headers: headers
   })
-    .then(json)
+    .then(res => res.json())
     .then(function(data) {
       console.log('Request succeeded with JSON response', data);
     })
@@ -166,4 +166,3 @@ export function deleteComment(id) {
       console.log('Request failed', error);
     });
 }
-
