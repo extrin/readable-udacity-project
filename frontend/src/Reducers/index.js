@@ -5,7 +5,7 @@ import * as commentActions from '../Actions/Comment';
 function posts(state = {}, action) {
   switch (action.type) {
     case postActions.LOAD_POSTS:
-      return { ...state, [posts]: action.posts };
+      return { ...state, posts: action.posts };
     case postActions.ADD_POST:
       return state;
     case postActions.UPDATE_POST:
