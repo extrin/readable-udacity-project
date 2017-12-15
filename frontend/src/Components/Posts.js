@@ -28,26 +28,27 @@ function Posts(props) {
         </select>
       </div>
       <div className="posts-list">
-        {props.posts.map(post => (
-          <div className="post">
-            <h2 className="post-title">{post.title}</h2>
-            <div className="post-author">by {post.author}</div>
-            <div className="post-timestamp">{post.timestamp}</div>
-            <div className="voteScore">
-              {post.voteScore}
-              <button className="vote-up">Vote Up</button>
-              <button className="vote-down">Vote Down</button>
+        {props.posts &&
+          props.posts.map(post => (
+            <div className="post" key={post.id}>
+              <h2 className="post-title">{post.title}</h2>
+              <div className="post-author">by {post.author}</div>
+              <div className="post-timestamp">{post.timestamp}</div>
+              <div className="voteScore">
+                {post.voteScore}
+                <button className="vote-up">Vote Up</button>
+                <button className="vote-down">Vote Down</button>
+              </div>
+              <p className="post-body-cut">{post.body}</p>
             </div>
-            <p className="post-body-cut">{trim(post.body)}</p>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );
 }
 
-const mapStateToProps = (state, props) => ({
-  posts: state.posts
-});
+const mapStateToProps = (state, ownProps) => {
+  return state.posts;
+};
 
 export default connect(mapStateToProps)(Posts);
