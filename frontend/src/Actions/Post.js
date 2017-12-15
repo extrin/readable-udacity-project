@@ -6,18 +6,14 @@ export const UPDATE_POST = 'UPDATE_POST';
 export const REMOVE_POST = 'REMOVE_POST';
 export const VOTE_ON_POST = 'VOTE_ON_POST';
 
-export function loadPosts({ posts }) {
-  return {
-    type: LOAD_POSTS,
-    posts
-  };
-}
+export const loadPosts = posts => ({
+  type: LOAD_POSTS,
+  posts
+});
 
-export function getPosts() {
-  return function(dispatch) {
-    API.getPosts().then(posts => dispatch(loadPosts(posts)));
-  };
-}
+export const getPosts = () => dispatch => {
+  return API.getPosts().then(posts => dispatch(loadPosts(posts)));
+};
 
 export function addPost({ id, timestamp, title, body, author, category }) {
   return {
