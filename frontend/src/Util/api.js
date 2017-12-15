@@ -5,10 +5,7 @@ if (!token)
     .toString(36)
     .substr(-8);
 
-const headers = {
-  Accept: 'application/json',
-  Authorization: token
-};
+const headers = { Authorization: token };
 const baseUrl = 'http://127.0.0.1:3001';
 
 export function getCategories() {
@@ -23,7 +20,9 @@ export function getPostsForCategory(category) {
 
 export function getPosts() {
   const endpoint = '/posts';
-  return fetch(baseUrl + endpoint, { headers }).then(res => res.json());
+  return fetch(baseUrl + endpoint, { headers: headers }).then(res =>
+    res.json()
+  );
 }
 
 export function getPost(id) {
