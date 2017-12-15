@@ -5,6 +5,7 @@ import App from './Components/App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import store from './Store/Store';
+import { getPosts } from './Actions/Post';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -12,5 +13,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-store.dispatch({ type: 'LOAD_POSTS' });
+getPosts()(store.dispatch);
 registerServiceWorker();
