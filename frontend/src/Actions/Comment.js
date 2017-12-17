@@ -1,15 +1,25 @@
+import * as API from '../Util/api';
+import uuid from 'uuid/v1';
+
 export const LOAD_COMMENTS = 'LOAD_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT';
 
-export function loadComments({ postId }) {
+export function loadComments({ postId, comments }) {
   return {
     type: LOAD_COMMENTS,
-    postId
-  }
+    postId,
+    comments
+  };
 }
+
+export const getComments = postId => dispatch => {
+  return API.getComments(postId).then(res =>
+    dispatch(loadComments(postId, res))
+  );
+};
 
 export function addComment({ id, timestamp, body, author, parentId }) {
   return {
@@ -22,6 +32,20 @@ export function addComment({ id, timestamp, body, author, parentId }) {
   };
 }
 
+export const createComment = (
+  id,
+  timestamp,
+  body,
+  author,
+  parentId
+) => dispatch => {
+  const uid = uuid();
+  const timestamp = Date.now();
+  return API.createComment(parentId, id, timestamp, author, body).then(
+    dispatch(addComment(id, timestamp, body, author, parentId))
+  );
+};
+
 export function updateComment({ id, timestamp, body }) {
   return {
     type: UPDATE_COMMENT,
@@ -31,12 +55,23 @@ export function updateComment({ id, timestamp, body }) {
   };
 }
 
+export const editComment = (id, timestamp, body) => dispatch => {
+  const timestamp = Date.now();
+  return API.updateComment(id, timestamp, body).then(
+    dispatch(updateComment(id, timestamp, body))
+  );
+};
+
 export function removeComment({ id }) {
   return {
     type: REMOVE_COMMENT,
     id
   };
 }
+
+export const deleteComment = id => dispatch => {
+  return API.deleteComment(id).then(dispatch(removeComment(id)));
+};
 
 export function voteOnComment({ id, option }) {
   return {
@@ -45,3 +80,9 @@ export function voteOnComment({ id, option }) {
     option
   };
 }
+
+export const changeVotescore = (id, option) => dispatch => {
+  return API.voteOnComment(id, option).then(
+    dispatch(voteOnComment(id, option))
+  );
+};
