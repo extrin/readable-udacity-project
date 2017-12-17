@@ -5,6 +5,7 @@ export const ADD_POST = 'ADD_POST';
 export const UPDATE_POST = 'UPDATE_POST';
 export const REMOVE_POST = 'REMOVE_POST';
 export const VOTE_ON_POST = 'VOTE_ON_POST';
+export const SELECT_POST = 'SELECT_POST';
 
 export const loadPosts = posts => ({
   type: LOAD_POSTS,
@@ -48,5 +49,12 @@ export function voteOnPost({ id, option }) {
     type: VOTE_ON_POST,
     id,
     option
+  };
+}
+
+export function selectPost({ id }) {
+  return {
+    type: SELECT_POST,
+    id
   };
 }
