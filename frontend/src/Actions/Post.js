@@ -18,7 +18,7 @@ export const getPosts = () => dispatch => {
   return API.getPosts().then(posts => dispatch(loadPosts(posts)));
 };
 
-export function addPost({ id, timestamp, title, body, author, category }) {
+export const addPost = ({ id, timestamp, title, body, author, category }) => {
   return {
     type: ADD_POST,
     id,
@@ -28,7 +28,7 @@ export function addPost({ id, timestamp, title, body, author, category }) {
     author,
     category
   };
-}
+};
 
 export const createPost = (title, body, author, category) => dispatch => {
   const uid = uuid();
@@ -38,14 +38,14 @@ export const createPost = (title, body, author, category) => dispatch => {
   );
 };
 
-export function updatePost({ id, title, body }) {
+export const updatePost = ({ id, title, body }) => {
   return {
     type: UPDATE_POST,
     id,
     title,
     body
   };
-}
+};
 
 export const editPost = (id, title, body) => dispatch => {
   return API.updatePost(id, title, body).then(
@@ -53,39 +53,39 @@ export const editPost = (id, title, body) => dispatch => {
   );
 };
 
-export function removePost({ id }) {
+export const removePost = ({ id }) => {
   return {
     type: REMOVE_POST,
     id
   };
-}
+};
 
 export const deletePost = id => dispatch => {
   return API.deletePost(id).then(dispatch(removePost(id)));
 };
 
-export function voteOnPost({ id, option }) {
+export const voteOnPost = ({ id, option }) => {
   return {
     type: VOTE_ON_POST,
     id,
     option
   };
-}
+};
 
 export const changeVotescore = (id, option) => dispatch => {
   return API.voteOnPost(id, option).then(dispatch(voteOnPost(id, option)));
 };
 
-export function selectPost({ id }) {
+export const selectPost = ({ id }) => {
   return {
     type: SELECT_POST,
     id
   };
-}
+};
 
-export function updateSortingMethod({ method }) {
+export const updateSortingMethod = ({ method }) => {
   return {
     type: UPDATE_SORTING_METHOD,
     method
   };
-}
+};
