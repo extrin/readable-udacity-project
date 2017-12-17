@@ -13,16 +13,8 @@ class App extends Component {
         <div className="app">
           <Route exact path="/" render={() => <MainView />} />
           <Route path="/create" render={() => <PostCreate />} />
-          <Route
-            path="/:category"
-            render={({ match }) => (
-              <MainView category={match.params.category} />
-            )}
-          />
-          <Route
-            path="/:category/:post_id"
-            render={({ match }) => <PostView post_id={match.params.post_id} />}
-          />
+          <Route path="/:category" render={() => <MainView />} />
+          <Route path="/:category/:post_id" render={() => <PostView />} />
         </div>
       </Router>
     );
