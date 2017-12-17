@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 function MainView(props) {
   return (
     <div className="default-view">
-      <Categories />
       <ErrorBoundary>
+        <Categories />
         <Posts />
       </ErrorBoundary>
       <div className="create-post">
