@@ -7,13 +7,13 @@ export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT';
 
-export function loadComments({ postId, comments }) {
+export const loadComments = ({ postId, comments }) => {
   return {
     type: LOAD_COMMENTS,
     postId,
     comments
   };
-}
+};
 
 export const getComments = postId => dispatch => {
   return API.getComments(postId).then(res =>
@@ -21,7 +21,7 @@ export const getComments = postId => dispatch => {
   );
 };
 
-export function addComment({ id, timestamp, body, author, parentId }) {
+export const addComment = ({ id, timestamp, body, author, parentId }) => {
   return {
     type: ADD_COMMENT,
     id,
@@ -30,7 +30,7 @@ export function addComment({ id, timestamp, body, author, parentId }) {
     author,
     parentId
   };
-}
+};
 
 export const createComment = (
   id,
@@ -41,19 +41,19 @@ export const createComment = (
 ) => dispatch => {
   const uid = uuid();
   const timestamp = Date.now();
-  return API.createComment(parentId, id, timestamp, author, body).then(
-    dispatch(addComment(id, timestamp, body, author, parentId))
+  return API.createComment(parentId, uid, timestamp, author, body).then(
+    dispatch(addComment(uid, timestamp, body, author, parentId))
   );
 };
 
-export function updateComment({ id, timestamp, body }) {
+export const updateComment = ({ id, timestamp, body }) => {
   return {
     type: UPDATE_COMMENT,
     id,
     timestamp,
     body
   };
-}
+};
 
 export const editComment = (id, timestamp, body) => dispatch => {
   const timestamp = Date.now();
@@ -62,24 +62,24 @@ export const editComment = (id, timestamp, body) => dispatch => {
   );
 };
 
-export function removeComment({ id }) {
+export const removeComment = ({ id }) => {
   return {
     type: REMOVE_COMMENT,
     id
   };
-}
+};
 
 export const deleteComment = id => dispatch => {
   return API.deleteComment(id).then(dispatch(removeComment(id)));
 };
 
-export function voteOnComment({ id, option }) {
+export const voteOnComment = ({ id, option }) => {
   return {
     type: VOTE_ON_COMMENT,
     id,
     option
   };
-}
+};
 
 export const changeVotescore = (id, option) => dispatch => {
   return API.voteOnComment(id, option).then(

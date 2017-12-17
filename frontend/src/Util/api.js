@@ -8,31 +8,31 @@ if (!token)
 const headers = { Authorization: token };
 const baseUrl = 'http://127.0.0.1:3001';
 
-export function getCategories() {
+export const getCategories = () => {
   const endpoint = '/categories';
   return fetch(baseUrl + endpoint, { headers: headers }).then(res =>
     res.json()
   );
-}
+};
 
-export function getPostsForCategory(category) {
+export const getPostsForCategory = category => {
   const endpoint = `/:${category}/posts`;
   return fetch(baseUrl + endpoint, { headers }).then(res => res.json());
-}
+};
 
-export function getPosts() {
+export const getPosts = () => {
   const endpoint = '/posts';
   return fetch(baseUrl + endpoint, { headers: headers }).then(res =>
     res.json()
   );
-}
+};
 
-export function getPost(id) {
+export const getPost = id => {
   const endpoint = `/posts/:${id}`;
   return fetch(baseUrl + endpoint, { headers }).then(res => res.json());
-}
+};
 
-export function createPost(id, timestamp, title, body, author, category) {
+export const createPost = (id, timestamp, title, body, author, category) => {
   const endpoint = '/posts';
   return fetch(baseUrl + endpoint, {
     method: 'post',
@@ -46,9 +46,9 @@ export function createPost(id, timestamp, title, body, author, category) {
     .catch(function(error) {
       console.log('Request failed', error);
     });
-}
+};
 
-export function voteOnPost(id, option) {
+export const voteOnPost = (id, option) => {
   const endpoint = `/posts/:${id}`;
   return fetch(baseUrl + endpoint, {
     method: 'post',
@@ -62,9 +62,9 @@ export function voteOnPost(id, option) {
     .catch(function(error) {
       console.log('Request failed', error);
     });
-}
+};
 
-export function updatePost(id, title, body) {
+export const updatePost = (id, title, body) => {
   const endpoint = `/posts/:${id}`;
   return fetch(baseUrl + endpoint, {
     method: 'put',
@@ -78,9 +78,9 @@ export function updatePost(id, title, body) {
     .catch(function(error) {
       console.log('Request failed', error);
     });
-}
+};
 
-export function deletePost(id) {
+export const deletePost = id => {
   const endpoint = `/posts/:${id}`;
   return fetch(baseUrl + endpoint, {
     method: 'delete',
@@ -93,19 +93,19 @@ export function deletePost(id) {
     .catch(function(error) {
       console.log('Request failed', error);
     });
-}
+};
 
-export function getComments(postId) {
+export const getComments = postId => {
   const endpoint = `/posts/:${postId}/comments`;
   return fetch(baseUrl + endpoint, { headers }).then(res => res.json());
-}
+};
 
-export function getComment(id) {
+export const getComment = id => {
   const endpoint = `/comments/:${id}`;
   return fetch(baseUrl + endpoint, { headers }).then(res => res.json());
-}
+};
 
-export function createComment(postId, id, timestamp, author, body) {
+export const createComment = (postId, id, timestamp, author, body) => {
   const endpoint = '/comments';
   return fetch(baseUrl + endpoint, {
     method: 'post',
@@ -119,9 +119,9 @@ export function createComment(postId, id, timestamp, author, body) {
     .catch(function(error) {
       console.log('Request failed', error);
     });
-}
+};
 
-export function voteOnComment(id, option) {
+export const voteOnComment = (id, option) => {
   const endpoint = `/comments/:${id}`;
   return fetch(baseUrl + endpoint, {
     method: 'post',
@@ -135,9 +135,9 @@ export function voteOnComment(id, option) {
     .catch(function(error) {
       console.log('Request failed', error);
     });
-}
+};
 
-export function updateComment(id, timestamp, body) {
+export const updateComment = (id, timestamp, body) => {
   const endpoint = `/comments/:${id}`;
   return fetch(baseUrl + endpoint, {
     method: 'put',
@@ -151,9 +151,9 @@ export function updateComment(id, timestamp, body) {
     .catch(function(error) {
       console.log('Request failed', error);
     });
-}
+};
 
-export function deleteComment(id) {
+export const deleteComment = id => {
   const endpoint = `/comments/:${id}`;
   return fetch(baseUrl + endpoint, {
     method: 'delete',
@@ -166,4 +166,4 @@ export function deleteComment(id) {
     .catch(function(error) {
       console.log('Request failed', error);
     });
-}
+};
