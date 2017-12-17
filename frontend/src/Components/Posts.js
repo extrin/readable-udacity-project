@@ -1,5 +1,5 @@
 import React from 'react';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const selectOptions = [
@@ -31,7 +31,9 @@ function Posts(props) {
         {props.posts &&
           props.posts.map(post => (
             <div className="post" key={post.id}>
-              <h2 className="post-title">{post.title}</h2>
+              <Link className="post-title" to="/:{post.category}/:{post.id}">
+                {post.title}
+              </Link>
               <div className="post-author">by {post.author}</div>
               <div className="post-timestamp">{post.timestamp}</div>
               <div className="voteScore">
@@ -39,7 +41,13 @@ function Posts(props) {
                 <button className="vote-up">Vote Up</button>
                 <button className="vote-down">Vote Down</button>
               </div>
-              <p className="post-body-cut">{post.body}</p>
+              <p className="post-body-cut">{trim(post.body)}</p>
+              <Link
+                className="post-comments-count"
+                to="/:{post.category}/:{post.id}"
+              >
+                {post.commentCount}
+              </Link>
             </div>
           ))}
       </div>
@@ -47,8 +55,8 @@ function Posts(props) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return state.posts;
-};
+const mapStateToProps = (state, ownProps) => ({
+  posts: state.posts
+});
 
 export default connect(mapStateToProps)(Posts);
