@@ -14,6 +14,10 @@ function trim(str) {
 }
 
 function Posts(props) {
+  const { posts, selectedCategory } = props;
+  const filteredPosts = selectedCategory
+    ? posts.filter(post => post.category === selectedCategory)
+    : posts;
   return (
     <div className="posts">
       <h1>Posts</h1>
@@ -28,35 +32,35 @@ function Posts(props) {
         </select>
       </div>
       <div className="posts-list">
-        {props.posts &&
-          props.posts.map(post => (
-            <div className="post" key={post.id}>
-              <Link className="post-title" to="/:{post.category}/:{post.id}">
-                {post.title}
-              </Link>
-              <div className="post-author">by {post.author}</div>
-              <div className="post-timestamp">{post.timestamp}</div>
-              <div className="voteScore">
-                {post.voteScore}
-                <button className="vote-up">Vote Up</button>
-                <button className="vote-down">Vote Down</button>
-              </div>
-              <p className="post-body-cut">{trim(post.body)}</p>
-              <Link
-                className="post-comments-count"
-                to="/:{post.category}/:{post.id}"
-              >
-                {post.commentCount}
-              </Link>
+        {filteredPosts.map(post => (
+          <div className="post" key={post.id}>
+            <Link className="post-title" to="/:{post.category}/:{post.id}">
+              {post.title}
+            </Link>
+            <div className="post-author">by {post.author}</div>
+            <div className="post-timestamp">{post.timestamp}</div>
+            <div className="voteScore">
+              {post.voteScore}
+              <button className="vote-up">Vote Up</button>
+              <button className="vote-down">Vote Down</button>
             </div>
-          ))}
+            <p className="post-body-cut">{trim(post.body)}</p>
+            <Link
+              className="post-comments-count"
+              to="/:{post.category}/:{post.id}"
+            >
+              {post.commentCount}
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  posts: state.posts
+  posts: state.posts,
+  category: state.selections.selectedCategory
 });
 
 export default connect(mapStateToProps)(Posts);
