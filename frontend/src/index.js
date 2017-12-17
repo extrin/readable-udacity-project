@@ -6,6 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import store from './Store/Store';
 import { getPosts } from './Actions/Post';
+import { getCategories } from './Actions/Category';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -13,5 +14,6 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+getCategories()(store.dispatch);
 getPosts()(store.dispatch);
 registerServiceWorker();

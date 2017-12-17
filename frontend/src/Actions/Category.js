@@ -9,13 +9,15 @@ export const loadCategories = categories => ({
 });
 
 export const getCategories = () => dispatch => {
-  return API.getCategories().then(categories =>
-    dispatch(loadCategories(categories))
-  );
+  return API.getCategories()
+    .then(res => {
+      const categories = res.categories;
+      return categories;
+    })
+    .then(categories => dispatch(loadCategories(categories)));
 };
 
 export const selectCategory = category => ({
   type: SELECT_CATEGORY,
   category
 });
-

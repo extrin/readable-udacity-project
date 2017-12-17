@@ -3,10 +3,10 @@ import * as postActions from '../Actions/Post';
 import * as commentActions from '../Actions/Comment';
 import * as categoryActions from '../Actions/Category';
 
-function posts(state = {}, action) {
+function posts(state = [], action) {
   switch (action.type) {
     case postActions.LOAD_POSTS:
-      return { ...state, posts: action.posts };
+      return action.posts;
     case postActions.ADD_POST:
       return state;
     case postActions.UPDATE_POST:
@@ -20,7 +20,7 @@ function posts(state = {}, action) {
   }
 }
 
-function comments(state = {}, action) {
+function comments(state = [], action) {
   switch (action.type) {
     case commentActions.LOAD_COMMENTS:
       return state;
@@ -37,12 +37,26 @@ function comments(state = {}, action) {
   }
 }
 
-function categories(state = {}, action) {
+function categories(state = [], action) {
   switch (action.type) {
     case categoryActions.LOAD_CATEGORIES:
-      return { ...state, categories: action.categories };
+      return action.categories;
+    default:
+      return state;
+  }
+}
+
+const initialSelections = {
+  selectedCategory: '',
+  selectedPost: ''
+};
+
+function selections(state = initialSelections, action) {
+  switch (action.type) {
     case categoryActions.SELECT_CATEGORY:
       return { ...state, selectedCategory: action.category };
+    case postActions.SELECT_POST:
+      return { ...state, selectedPost: action.post };
     default:
       return state;
   }
@@ -51,5 +65,6 @@ function categories(state = {}, action) {
 export default combineReducers({
   posts,
   comments,
-  categories
+  categories,
+  selections
 });
