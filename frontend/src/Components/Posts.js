@@ -14,9 +14,9 @@ function trim(str) {
 }
 
 function Posts(props) {
-  const { posts, selectedCategory } = props;
-  const filteredPosts = selectedCategory
-    ? posts.filter(post => post.category === selectedCategory)
+  const { posts, category } = props;
+  const filteredPosts = category
+    ? posts.filter(post => post.category === category.name)
     : posts;
   return (
     <div className="posts">
