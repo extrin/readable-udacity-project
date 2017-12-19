@@ -46,15 +46,34 @@ function posts(state = [], action) {
 function comments(state = [], action) {
   switch (action.type) {
     case commentActions.LOAD_COMMENTS:
-      return state;
+      return action.comments;
     case commentActions.ADD_COMMENT:
-      return state;
+      const comment = {
+        id: action.id,
+        timestamp: action.timestamp,
+        body: action.body,
+        author: action.author,
+        parentId: action.parentId
+      };
+      return { ...state, [state.length]: comment };
     case commentActions.UPDATE_COMMENT:
-      return state;
+      return state.map(comment => {
+        if (comment.id === action.id) {
+          comment.body = action.body;
+          comment.timestamp = action.timestamp;
+        }
+        return comment;
+      });
     case commentActions.REMOVE_COMMENT:
-      return state;
+      return state.filter(comment => comment.id !== action.id);
     case commentActions.VOTE_ON_COMMENT:
-      return state;
+      return state.map(comment => {
+        if (comment.id === action.id) {
+          if (action.option === 'downVote') comment.voteScore--;
+          else comment.voteScore++;
+        }
+        return comment;
+      });
     default:
       return state;
   }
