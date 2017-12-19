@@ -11,10 +11,10 @@ class App extends Component {
     return (
       <Router>
         <div className="app">
-          <Route exact path="/" render={() => <MainView />} />
-          <Route path="/create" render={() => <PostCreate />} />
-          <Route path="/:category" render={() => <MainView />} />
-          <Route path="/:category/:post_id" render={() => <PostView />} />
+          <Route exact path="/" component={MainView} />
+          <Route exact path="/create" component={PostCreate} />
+          <Route exact path="/:category" component={MainView} />
+          <Route exact path="/:category/:post_id" component={PostView} />
         </div>
       </Router>
     );

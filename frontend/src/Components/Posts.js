@@ -34,7 +34,7 @@ function Posts(props) {
       <div className="posts-list">
         {filteredPosts.map(post => (
           <div className="post" key={post.id}>
-            <Link className="post-title" to={`/:${post.category}/:${post.id}`}>
+            <Link className="post-title" to={`/${post.category}/${post.id}`}>
               {post.title}
             </Link>
             <div className="post-author">by {post.author}</div>
@@ -47,7 +47,7 @@ function Posts(props) {
             <p className="post-body-cut">{trim(post.body)}</p>
             <Link
               className="post-comments-count"
-              to={`/:${post.category}/:${post.id}`}
+              to={`/${post.category}/${post.id}`}
             >
               {post.commentCount}
             </Link>
