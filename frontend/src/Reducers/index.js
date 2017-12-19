@@ -8,13 +8,36 @@ function posts(state = [], action) {
     case postActions.LOAD_POSTS:
       return action.posts;
     case postActions.ADD_POST:
-      return state;
+      const post = {
+        id: action.id,
+        timestamp: action.timestamp,
+        title: action.title,
+        body: action.body,
+        author: action.author,
+        category: action.category,
+        voteScore: 0,
+        deleted: false,
+        commentCount: 0
+      };
+      return { ...state, [state.length]: post };
     case postActions.UPDATE_POST:
-      return state;
+      return state.map(post => {
+        if (post.id === action.id) {
+          post.title = action.id;
+          post.body = action.body;
+        }
+        return post;
+      });
     case postActions.REMOVE_POST:
-      return state;
+      return state.filter(post => post.id !== action.id);
     case postActions.VOTE_ON_POST:
-      return state;
+      return state.map(post => {
+        if (post.id === action.id) {
+          if (action.option === 'downVote') post.voteScore--;
+          else post.voteScore++;
+        }
+        return post;
+      });
     default:
       return state;
   }
