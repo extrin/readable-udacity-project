@@ -88,17 +88,16 @@ function categories(state = [], action) {
   }
 }
 
-const initialSelections = {
-  selectedCategory: '',
-  selectedPost: ''
-};
-
-function selections(state = initialSelections, action) {
+function selections(state = {}, action) {
   switch (action.type) {
     case categoryActions.SELECT_CATEGORY:
       return { ...state, selectedCategory: action.category };
     case postActions.SELECT_POST:
-      return { ...state, selectedPost: action.post };
+      return { ...state, selectedPost: action.id };
+    case postActions.UPDATE_SORTING_METHOD:
+      return { ...state, selectedSortingMethod: action.method };
+    case commentActions.SELECT_COMMENT:
+      return { ...state, selectComment: action.id };
     default:
       return state;
   }
