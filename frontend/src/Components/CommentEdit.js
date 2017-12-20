@@ -10,20 +10,22 @@ class CommentEdit extends Component {
   };
 
   render() {
+    const { author, body, id, saveComment } = this.props;
+
     return (
       <div className="comment-edit">
         <p>Edit comment</p>
-        <p>Author: {this.props.author}</p>
+        <p>Author: {author}</p>
         <input
           className="comment-body-input"
           type="text"
-          value={this.state.body || this.props.body}
+          value={this.state.body || body}
           onChange={event => this.updateBody(event.target.value)}
           required
         />
         <button
           className="comment-save-btn"
-          onClick={() => this.props.saveComment(this.props.id, this.state.body)}
+          onClick={() => saveComment(id, this.state.body)}
         >
           Save
         </button>

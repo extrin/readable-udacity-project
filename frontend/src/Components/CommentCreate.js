@@ -18,6 +18,7 @@ class CommentCreate extends Component {
 
   render() {
     const { author, body } = this.state;
+    const { addComment, parentId } = this.props;
 
     return (
       <div className="comment-create">
@@ -39,9 +40,7 @@ class CommentCreate extends Component {
         />
         <button
           className="comment-save-btn"
-          onClick={() =>
-            this.props.addComment(body, author, this.props.parentId)
-          }
+          onClick={() => addComment(body, author, parentId)}
         >
           Save
         </button>
