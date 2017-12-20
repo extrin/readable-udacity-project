@@ -33,13 +33,7 @@ export const addComment = ({ id, timestamp, body, author, parentId }) => {
   };
 };
 
-export const createComment = (
-  id,
-  timestamp,
-  body,
-  author,
-  parentId
-) => dispatch => {
+export const createComment = (body, author, parentId) => dispatch => {
   const uid = uuid();
   const timestamp = Date.now();
   return API.createComment(parentId, uid, timestamp, author, body).then(
