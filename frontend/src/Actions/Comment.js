@@ -50,7 +50,7 @@ export const updateComment = ({ id, timestamp, body }) => {
   };
 };
 
-export const editComment = (id, timestamp, body) => dispatch => {
+export const editComment = (id, body) => dispatch => {
   const timestamp = Date.now();
   return API.updateComment(id, timestamp, body).then(
     dispatch(updateComment(id, timestamp, body))
