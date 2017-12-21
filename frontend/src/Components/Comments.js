@@ -3,8 +3,8 @@ import Modal from 'react-modal';
 import sortBy from 'sort-by';
 import { connect } from 'react-redux';
 import {
-  removeComment,
-  voteOnComment,
+  deleteComment,
+  changeVotescore,
   selectComment
 } from '../Actions/Comment';
 import CommentEdit from './CommentEdit';
@@ -75,9 +75,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  upVote: (id, option) => dispatch(voteOnComment(id, 'upVote')),
-  downVote: (id, option) => dispatch(voteOnComment(id, 'downVote')),
-  deleteComment: id => dispatch(removeComment(id)),
+  upVote: (id, option) => dispatch(changeVotescore(id, 'upVote')),
+  downVote: (id, option) => dispatch(changeVotescore(id, 'downVote')),
+  removeComment: id => dispatch(deleteComment(id)),
   openForEdit: id => dispatch(selectComment(id))
 });
 
