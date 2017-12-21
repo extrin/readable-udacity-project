@@ -8,7 +8,7 @@ export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT';
 export const SELECT_COMMENT = 'SELECT_COMMENT';
 
-export const loadComments = ({ postId, comments }) => {
+export const loadComments = (postId, comments) => {
   return {
     type: LOAD_COMMENTS,
     postId,
@@ -22,7 +22,7 @@ export const getComments = postId => dispatch => {
   );
 };
 
-export const addComment = ({ id, timestamp, body, author, parentId }) => {
+export const addComment = (id, timestamp, body, author, parentId) => {
   return {
     type: ADD_COMMENT,
     id,
@@ -41,7 +41,7 @@ export const createComment = (body, author, parentId) => dispatch => {
   );
 };
 
-export const updateComment = ({ id, timestamp, body }) => {
+export const updateComment = (id, timestamp, body) => {
   return {
     type: UPDATE_COMMENT,
     id,
@@ -57,7 +57,7 @@ export const editComment = (id, body) => dispatch => {
   );
 };
 
-export const removeComment = ({ id }) => {
+export const removeComment = id => {
   return {
     type: REMOVE_COMMENT,
     id
@@ -68,7 +68,7 @@ export const deleteComment = id => dispatch => {
   return API.deleteComment(id).then(dispatch(removeComment(id)));
 };
 
-export const voteOnComment = ({ id, option }) => {
+export const voteOnComment = (id, option) => {
   return {
     type: VOTE_ON_COMMENT,
     id,
@@ -82,6 +82,6 @@ export const changeVotescore = (id, option) => dispatch => {
   );
 };
 
-export const selectComment = ({ id }) => {
+export const selectComment = id => {
   return { type: SELECT_COMMENT, id };
 };
