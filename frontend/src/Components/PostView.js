@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
-import { deletePost, changeVotescore } from '../Actions/Post';
+import { deletePost, changeVotescore, selectPost } from '../Actions/Post';
 import CommentCreate from './CommentCreate';
 import Comments from './Comments';
 
@@ -21,7 +21,7 @@ class PostView extends Component {
 
   render() {
     const { commentModalOpen } = this.state;
-    const { post, upVote, downVote, removePost } = this.props;
+    const { post, upVote, downVote, removePost, openPost } = this.props;
     return (
       <div className="post-view">
         <Link to="/">Home</Link>
@@ -38,6 +38,13 @@ class PostView extends Component {
           <h2 className="post-title">{post.title}</h2>
           <div className="post-author">by {post.author}</div>
           <div className="post-timestamp">{post.timestamp}</div>
+          <Link
+            className="post-edit-link"
+            to={`/${post.category}/${post.id}/edit`}
+            onClick={() => openPost(post.id)}
+          >
+            Edit
+          </Link>
           <button className="post-delete" onClick={() => removePost(post.id)}>
             Delete post
           </button>
@@ -77,7 +84,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   upVote: id => dispatch(changeVotescore(id, 'upVote')),
   downVote: id => dispatch(changeVotescore(id, 'downVote')),
-  removePost: id => dispatch(deletePost(id))
+  removePost: id => dispatch(deletePost(id)),
+  openPost: id => dispatch(selectPost(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostView);

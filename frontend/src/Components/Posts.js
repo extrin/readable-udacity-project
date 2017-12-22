@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import {
   selectPost,
   changeVotescore,
-  updateSortingMethod
+  updateSortingMethod,
+  deletePost
 } from '../Actions/Post';
 import { getComments } from '../Actions/Comment';
 
@@ -28,7 +29,8 @@ class Posts extends Component {
       openPost,
       upVote,
       downVote,
-      changeSorting
+      changeSorting,
+      removePost
     } = this.props;
 
     const filteredPosts = category
@@ -60,13 +62,23 @@ class Posts extends Component {
               <Link
                 className="post-title"
                 to={`/${post.category}/${post.id}`}
-                onClick={() => {
-                  console.log(post.id);
-                  openPost(post.id);
-                }}
+                onClick={() => openPost(post.id)}
               >
                 {post.title}
               </Link>
+              <Link
+                className="post-edit-link"
+                to={`/${post.category}/${post.id}/edit`}
+                onClick={() => openPost(post.id)}
+              >
+                Edit
+              </Link>
+              <button
+                className="post-delete-btn"
+                onCLick={() => removePost(post.id)}
+              >
+                Delete
+              </button>
               <div className="post-author">by {post.author}</div>
               <div className="post-timestamp">{post.timestamp}</div>
               <div className="voteScore">
@@ -110,7 +122,8 @@ const mapDispatchToProps = dispatch => ({
   },
   upVote: id => dispatch(changeVotescore(id, 'upVote')),
   downVote: id => dispatch(changeVotescore(id, 'downVote')),
-  changeSorting: option => dispatch(updateSortingMethod(option))
+  changeSorting: option => dispatch(updateSortingMethod(option)),
+  removePost: id => dispatch(deletePost(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);
