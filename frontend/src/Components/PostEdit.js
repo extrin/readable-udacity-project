@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { editPost } from '../Actions/Post';
+import { Link } from 'react-router-dom';
 
 class PostEdit extends Component {
   state = { postTitle: '', postBody: '' };
@@ -53,4 +54,4 @@ const mapDispatchToProps = dispatch => ({
   savePost: (id, title, body) => dispatch(editPost(id, title, body))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PPostEdit);
+export default connect(mapStateToProps, mapDispatchToProps)(PostEdit);
