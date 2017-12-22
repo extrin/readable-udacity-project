@@ -75,7 +75,7 @@ class Posts extends Component {
               </Link>
               <button
                 className="post-delete-btn"
-                onCLick={() => removePost(post.id)}
+                onClick={() => removePost(post.id)}
               >
                 Delete
               </button>
