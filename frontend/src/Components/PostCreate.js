@@ -24,19 +24,19 @@ class PostCreate extends Component {
 
   render() {
     const { categories, savePost } = this.props;
-    const { title, body, category, author } = this.state;
+    const { postTitle, postBody, postCategory, postAuthor } = this.state;
     return (
       <div className="post-create">
         <Link to="/">Home</Link>
         <input
           type="text"
-          value={title}
+          value={postTitle}
           onChange={event => this.updateTitle(event.target.value)}
           placeholder="Post title..."
           required
         />
         <textarea
-          value={body}
+          value={postBody}
           onChange={event => this.updateBody(event.target.value)}
           placeholder="Post body..."
           required
@@ -49,21 +49,24 @@ class PostCreate extends Component {
             Select category
           </option>
           {categories.map(cat => (
-            <option key={cat.name} value={cat.value}>
-              {cat.value}
+            <option key={cat.path} value={cat.name}>
+              {cat.name}
             </option>
           ))}
         </select>
         <input
           type="text"
-          value={author}
+          value={postAuthor}
           onChange={event => this.updateAuthor(event.target.value)}
           placeholder="Author nickname"
           required
         />
         <button
           className="post-save-btn"
-          onClick={() => savePost(title, body, author, category)}
+          onClick={() => {
+            console.log(postTitle, postBody, postCategory, postAuthor);
+            savePost(postTitle, postBody, postCategory, postAuthor);
+          }}
         >
           <Link to="/">Save</Link>
         </button>
@@ -77,8 +80,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  savePost: (title, body, author, category) =>
-    dispatch(createPost(title, body, author, category))
+  savePost: (title, body, author, category) => {
+    console.log(title, body, author, category);
+    dispatch(createPost(title, body, author, category));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostCreate);

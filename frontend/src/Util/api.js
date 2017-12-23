@@ -16,7 +16,7 @@ export const getCategories = () => {
 };
 
 export const getPostsForCategory = category => {
-  const endpoint = `/:${category}/posts`;
+  const endpoint = `/${category}/posts`;
   return fetch(baseUrl + endpoint, { headers }).then(res => res.json());
 };
 
@@ -28,7 +28,7 @@ export const getPosts = () => {
 };
 
 export const getPost = id => {
-  const endpoint = `/posts/:${id}`;
+  const endpoint = `/posts/${id}`;
   return fetch(baseUrl + endpoint, { headers }).then(res => res.json());
 };
 
@@ -49,7 +49,7 @@ export const createPost = (id, timestamp, title, body, author, category) => {
 };
 
 export const voteOnPost = (id, option) => {
-  const endpoint = `/posts/:${id}`;
+  const endpoint = `/posts/${id}`;
   return fetch(baseUrl + endpoint, {
     method: 'post',
     headers: headers,
@@ -65,7 +65,7 @@ export const voteOnPost = (id, option) => {
 };
 
 export const updatePost = (id, title, body) => {
-  const endpoint = `/posts/:${id}`;
+  const endpoint = `/posts/${id}`;
   return fetch(baseUrl + endpoint, {
     method: 'put',
     headers: headers,
@@ -81,7 +81,7 @@ export const updatePost = (id, title, body) => {
 };
 
 export const deletePost = id => {
-  const endpoint = `/posts/:${id}`;
+  const endpoint = `/posts/${id}`;
   return fetch(baseUrl + endpoint, {
     method: 'delete',
     headers: headers
@@ -96,12 +96,12 @@ export const deletePost = id => {
 };
 
 export const getComments = postId => {
-  const endpoint = `/posts/:${postId}/comments`;
+  const endpoint = `/posts/${postId}/comments`;
   return fetch(baseUrl + endpoint, { headers }).then(res => res.json());
 };
 
 export const getComment = id => {
-  const endpoint = `/comments/:${id}`;
+  const endpoint = `/comments/${id}`;
   return fetch(baseUrl + endpoint, { headers }).then(res => res.json());
 };
 
@@ -122,7 +122,7 @@ export const createComment = (postId, id, timestamp, author, body) => {
 };
 
 export const voteOnComment = (id, option) => {
-  const endpoint = `/comments/:${id}`;
+  const endpoint = `/comments/${id}`;
   return fetch(baseUrl + endpoint, {
     method: 'post',
     headers: headers,
@@ -138,7 +138,7 @@ export const voteOnComment = (id, option) => {
 };
 
 export const updateComment = (id, timestamp, body) => {
-  const endpoint = `/comments/:${id}`;
+  const endpoint = `/comments/${id}`;
   return fetch(baseUrl + endpoint, {
     method: 'put',
     headers: headers,
@@ -154,7 +154,7 @@ export const updateComment = (id, timestamp, body) => {
 };
 
 export const deleteComment = id => {
-  const endpoint = `/comments/:${id}`;
+  const endpoint = `/comments/${id}`;
   return fetch(baseUrl + endpoint, {
     method: 'delete',
     headers: headers

@@ -15,11 +15,11 @@ function posts(state = [], action) {
         body: action.body,
         author: action.author,
         category: action.category,
-        voteScore: 0,
+        voteScore: 1,
         deleted: false,
         commentCount: 0
       };
-      return { ...state, [state.length]: post };
+      return state.concat([post]);
     case postActions.UPDATE_POST:
       return state.map(post => {
         if (post.id === action.id) {
@@ -53,9 +53,12 @@ function comments(state = [], action) {
         timestamp: action.timestamp,
         body: action.body,
         author: action.author,
-        parentId: action.parentId
+        parentId: action.parentId,
+        voteScore: 1,
+        deleted: false,
+        parentDeleted: false
       };
-      return { ...state, [state.length]: comment };
+      return state.concat([comment]);
     case commentActions.UPDATE_COMMENT:
       return state.map(comment => {
         if (comment.id === action.id) {
