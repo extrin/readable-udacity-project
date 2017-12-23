@@ -6,29 +6,20 @@ import { selectCategory } from '../Actions/Category';
 function Categories(props) {
   return (
     <div className="categories">
-      <Link
-        to="/"
-        onClick={() => {
-          props.openCategory();
-        }}
-      >
-        Home
-      </Link>
       <h1>Categories</h1>
       <ul className="categories-list">
-        {props.categories &&
-          props.categories.map(cat => (
-            <li key={cat.name}>
-              <Link
-                to={`/${cat.path}`}
-                onClick={() => {
-                  props.openCategory(cat);
-                }}
-              >
-                {cat.name}
-              </Link>
-            </li>
-          ))}
+        {props.categories.map(cat => (
+          <li key={cat.name}>
+            <Link
+              to={`/${cat.path}`}
+              onClick={() => {
+                props.openCategory(cat);
+              }}
+            >
+              {cat.name}
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );

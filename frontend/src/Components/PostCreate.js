@@ -27,7 +27,6 @@ class PostCreate extends Component {
     const { postTitle, postBody, postCategory, postAuthor } = this.state;
     return (
       <div className="post-create">
-        <Link to="/">Home</Link>
         <input
           type="text"
           value={postTitle}

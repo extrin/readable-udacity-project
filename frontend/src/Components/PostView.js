@@ -24,7 +24,6 @@ class PostView extends Component {
     const { post, upVote, downVote, removePost, openPost } = this.props;
     return (
       <div className="post-view">
-        <Link to="/">Home</Link>
         <div className="post-details">
           <div className="voteScore">
             {post.voteScore}

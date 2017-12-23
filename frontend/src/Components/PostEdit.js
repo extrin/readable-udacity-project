@@ -19,7 +19,6 @@ class PostEdit extends Component {
     const { post, savePost } = this.props;
     return (
       <div className="post-edit">
-        <Link to="/">Home</Link>
         <input
           type="text"
           value={post.title || title}
