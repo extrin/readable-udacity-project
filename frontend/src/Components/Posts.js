@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Card, CardActions, CardTitle, CardHeader } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import Comment from 'material-ui/svg-icons/communication/comment';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import {
   selectPost,
   changeVotescore,
@@ -19,6 +24,19 @@ class Posts extends Component {
 
   trim = str => {
     return str.length > 255 ? str.slice(0, 16) + '...' : str;
+  };
+
+  getPostDate = timestamp => {
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      weekday: 'long',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric'
+    };
+    return timestamp.toLocaleString('en-US', options);
   };
 
   render() {
@@ -41,8 +59,8 @@ class Posts extends Component {
       <div className="posts">
         <h1>Posts</h1>
         <div className="posts-sort">
-          Sort by...
-          <select
+          <SelectField
+            floatingLabelText="Sort by..."
             className="sort-select"
             value={
               this.selectOptions.filter(opt => opt.id === sortingMethodId).value
@@ -50,58 +68,63 @@ class Posts extends Component {
             onChange={event => changeSorting(event.target.value)}
           >
             {this.selectOptions.map(opt => (
-              <option value={opt.value} key={opt.name}>
-                {opt.value}
-              </option>
+              <MenuItem
+                value={opt.value}
+                key={opt.name}
+                primaryText={opt.value}
+              />
             ))}
-          </select>
+          </SelectField>
         </div>
         <div className="posts-list">
           {filteredPosts.map(post => (
-            <div className="post" key={post.id}>
+            <Card className="post" key={post.id}>
+              <CardActions>
+                <FlatButton
+                  label="EDIT"
+                  href={`/${post.category}/${post.id}/edit`}
+                  onClick={() => openPost(post.id)}
+                />
+                <FlatButton
+                  label="DELETE"
+                  onClick={() => removePost(post.id)}
+                />
+              </CardActions>
               <Link
                 className="post-title"
                 to={`/${post.category}/${post.id}`}
                 onClick={() => openPost(post.id)}
               >
-                {post.title}
+                <CardTitle
+                  title={post.title}
+                  subtitle={`${this.getPostDate(post.timestamp)} by ${
+                    post.author
+                  }`}
+                />
               </Link>
-              <Link
-                className="post-edit-link"
-                to={`/${post.category}/${post.id}/edit`}
-                onClick={() => openPost(post.id)}
-              >
-                Edit
-              </Link>
-              <button
-                className="post-delete-btn"
-                onClick={() => removePost(post.id)}
-              >
-                Delete
-              </button>
-              <div className="post-author">by {post.author}</div>
-              <div className="post-timestamp">{post.timestamp}</div>
-              <div className="voteScore">
-                {post.voteScore}
-                <button className="vote-up" onClick={() => upVote(post.id)}>
-                  Vote Up
-                </button>
-                <button className="vote-down" onClick={() => downVote(post.id)}>
-                  Vote Down
-                </button>
-              </div>
-              <p className="post-body-cut">{this.trim(post.body)}</p>
+              <CardHeader title={post.voteScore} />
+              <CardActions>
+                <FlatButton
+                  className="vote-up"
+                  label="Vote Up"
+                  onClick={() => upVote(post.id)}
+                />
+                <FlatButton
+                  className="vote-down"
+                  label="Vote Down"
+                  onClick={() => downVote(post.id)}
+                />
+              </CardActions>
               <Link
                 className="post-comments-count"
                 to={`/${post.category}/${post.id}`}
                 onClick={() => {
-                  console.log(post.id);
                   openPost(post.id);
                 }}
               >
-                {post.commentCount}
+                <CardHeader title={post.commentCount} avatar={<Comment />} />
               </Link>
-            </div>
+            </Card>
           ))}
         </div>
       </div>

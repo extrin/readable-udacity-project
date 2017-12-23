@@ -2,26 +2,29 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectCategory } from '../Actions/Category';
+import { List, ListItem } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 
 function Categories(props) {
   return (
-    <div className="categories">
-      <h1>Categories</h1>
-      <ul className="categories-list">
-        {props.categories.map(cat => (
-          <li key={cat.name}>
-            <Link
-              to={`/${cat.path}`}
-              onClick={() => {
-                props.openCategory(cat);
-              }}
-            >
-              {cat.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <List>
+      <Subheader>Categories</Subheader>
+      <ListItem
+        primaryText="All"
+        containerElement={<Link to="/" />}
+        onClick={() => props.openCategory()}
+      />
+      {props.categories.map(cat => (
+        <ListItem
+          key={cat.name}
+          primaryText={cat.name}
+          containerElement={<Link to={`/${cat.path}`} />}
+          onClick={() => {
+            props.openCategory(cat);
+          }}
+        />
+      ))}
+    </List>
   );
 }
 
