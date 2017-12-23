@@ -17,14 +17,14 @@ class CommentCreate extends Component {
   };
 
   render() {
-    const { author, body } = this.state;
+    const { commentAuthor, commentBody } = this.state;
     const { addComment, parentId } = this.props;
 
     return (
       <div className="comment-create">
         <input
           className="comment-author-input"
-          value={author}
+          value={commentAuthor}
           onChange={event => this.updateAuthor(event.target.value)}
           type="text"
           placeholder="Comment Author"
@@ -32,7 +32,7 @@ class CommentCreate extends Component {
         />
         <input
           className="comment-body-input"
-          value={body}
+          value={commentBody}
           onChange={event => this.updateBody(event.target.value)}
           type="text"
           placeholder="Comment Body"
@@ -40,7 +40,7 @@ class CommentCreate extends Component {
         />
         <button
           className="comment-save-btn"
-          onClick={() => addComment(body, author, parentId)}
+          onClick={() => addComment(commentBody, commentAuthor, parentId)}
         >
           Save
         </button>
