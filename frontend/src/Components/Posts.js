@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Card, CardActions, CardTitle, CardHeader } from 'material-ui/Card';
+import {
+  Card,
+  CardActions,
+  CardTitle,
+  CardHeader,
+  CardText
+} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import Comment from 'material-ui/svg-icons/communication/comment';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import Remove from 'material-ui/svg-icons/content/clear';
+import Edit from 'material-ui/svg-icons/image/edit';
+import ArrowUp from 'material-ui/svg-icons/navigation/arrow-upward';
+import ArrowDown from 'material-ui/svg-icons/navigation/arrow-downward';
 import {
   selectPost,
   changeVotescore,
@@ -28,15 +38,18 @@ class Posts extends Component {
 
   getPostDate = timestamp => {
     const options = {
+      hourCycle: 'h24',
       year: 'numeric',
       month: 'long',
-      day: 'numeric',
+      day: '2-digit',
       weekday: 'long',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric'
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
     };
-    return timestamp.toLocaleString('en-US', options);
+    const res = new Date(timestamp).toLocaleString('en-US', options);
+    console.log(res);
+    return res;
   };
 
   render() {
@@ -57,9 +70,9 @@ class Posts extends Component {
 
     return (
       <div className="posts">
-        <h1>Posts</h1>
         <div className="posts-sort">
           <SelectField
+            fullWidth={true}
             floatingLabelText="Sort by..."
             className="sort-select"
             value={
@@ -81,40 +94,42 @@ class Posts extends Component {
             <Card className="post" key={post.id}>
               <CardActions>
                 <FlatButton
-                  label="EDIT"
+                  className="vote-up"
+                  icon={<ArrowUp color="red" />}
+                  onClick={() => upVote(post.id)}
+                />
+                <FlatButton label={post.voteScore} disabled />
+                <FlatButton
+                  className="vote-down"
+                  icon={<ArrowDown color="blue" />}
+                  onClick={() => downVote(post.id)}
+                />
+                <FlatButton
+                  icon={<Edit />}
                   href={`/${post.category}/${post.id}/edit`}
                   onClick={() => openPost(post.id)}
                 />
                 <FlatButton
-                  label="DELETE"
+                  icon={<Remove />}
                   onClick={() => removePost(post.id)}
                 />
               </CardActions>
-              <Link
-                className="post-title"
-                to={`/${post.category}/${post.id}`}
-                onClick={() => openPost(post.id)}
-              >
-                <CardTitle
-                  title={post.title}
-                  subtitle={`${this.getPostDate(post.timestamp)} by ${
-                    post.author
-                  }`}
-                />
-              </Link>
-              <CardHeader title={post.voteScore} />
-              <CardActions>
-                <FlatButton
-                  className="vote-up"
-                  label="Vote Up"
-                  onClick={() => upVote(post.id)}
-                />
-                <FlatButton
-                  className="vote-down"
-                  label="Vote Down"
-                  onClick={() => downVote(post.id)}
-                />
-              </CardActions>
+              <CardTitle
+                title={
+                  <Link
+                    className="post-title"
+                    style={{ textDecoration: 'none' }}
+                    to={`/${post.category}/${post.id}`}
+                    onClick={() => openPost(post.id)}
+                  >
+                    {post.title}
+                  </Link>
+                }
+                subtitle={`${this.getPostDate(post.timestamp)} by ${
+                  post.author
+                }`}
+              />
+              <CardText>{this.trim(post.body)}</CardText>
               <Link
                 className="post-comments-count"
                 to={`/${post.category}/${post.id}`}
