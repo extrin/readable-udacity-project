@@ -1,9 +1,13 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { createPost } from '../Actions/Post';
 import { connect } from 'react-redux';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 
-class PostCreate extends Component {
+class PostCreate extends React.Component {
   state = { postTitle: '', postBody: '', postCategory: '', postAuthor: '' };
 
   updateTitle = title => {
@@ -25,50 +29,64 @@ class PostCreate extends Component {
   render() {
     const { categories, savePost } = this.props;
     const { postTitle, postBody, postCategory, postAuthor } = this.state;
+
     return (
       <div className="post-create">
-        <input
-          type="text"
+      <Paper zDepth={2}>
+        <TextField
+      	  className="post-title"
           value={postTitle}
           onChange={event => this.updateTitle(event.target.value)}
-          placeholder="Post title..."
+          hintText="Post title"
+      	  errorText={postTitle==="" && "This field is required."}
           required
         />
-        <textarea
+        <TextField
+	      className="post-body"
           value={postBody}
           onChange={event => this.updateBody(event.target.value)}
-          placeholder="Post body..."
+          hintText="Post body"
+		  errorText={postBody==="" && "This field is required."}
+		  floatingLabelText="Write your post here"
+		  multiLine={true}
+		  rows={10}
           required
         />
-        <select
-          className="post-category-select"
-          onChange={event => this.updateCategory(event.target.value)}
-        >
-          <option disabled value="Select category">
+          <SelectField
+			className="post-category-select"
+            floatingLabelText="Post category"
+			errorText={postCategory==="" && "This field is required."}
+            onChange={event => this.updateCategory(event.target.value)}
+          >
+            <MenuItem disabled value="Select category">
             Select category
-          </option>
+          </MenuItem>
           {categories.map(cat => (
-            <option key={cat.path} value={cat.name}>
+            <MenuItem key={cat.path} value={cat.name}>
               {cat.name}
-            </option>
+            </MenuItem>
           ))}
-        </select>
-        <input
+          </SelectField>
+        <TextField
+		  className="post-author"
           type="text"
           value={postAuthor}
           onChange={event => this.updateAuthor(event.target.value)}
-          placeholder="Author nickname"
+          hintText="Author nickname"
+		  errorText={postAuthor==="" && "This field is required."}
           required
         />
-        <button
+        <RaisedButton
           className="post-save-btn"
           onClick={() => {
-            console.log(postTitle, postBody, postCategory, postAuthor);
             savePost(postTitle, postBody, postCategory, postAuthor);
           }}
-        >
-          <Link to="/">Save</Link>
-        </button>
+        
+          label="SAVE"
+		  href="/"
+		  primary={true}
+        />
+		</Paper>
       </div>
     );
   }
