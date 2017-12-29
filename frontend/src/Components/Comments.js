@@ -23,7 +23,7 @@ class Comments extends Component {
 
   render() {
     const { comments, upVote, downVote, deleteComment } = this.props;
-    const { modalOpen } = this.state;
+    const { editModalOpen } = this.state;
     return (
       <div className="comments-list">
         {comments.sort(sortBy('timestamp')).map(comment => (
@@ -54,17 +54,17 @@ class Comments extends Component {
               </button>
             </div>
             <div className="comment-body">{comment.body}</div>
-            <Modal
-              className="modal"
-              overlayClassName="overlay"
-              isOpen={modalOpen}
-              onRequestClose={this.closeEditModal}
-              contentLabel="Modal"
-            >
-              <CommentEdit />
-            </Modal>
           </div>
         ))}
+        <Modal
+          className="modal"
+          overlayClassName="overlay"
+          isOpen={editModalOpen}
+          onRequestClose={this.closeEditModal}
+          contentLabel="Modal"
+        >
+          <CommentEdit />
+        </Modal>
       </div>
     );
   }
