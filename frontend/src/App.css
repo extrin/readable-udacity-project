@@ -12,12 +12,14 @@
   width: 50%;
 }
 
-.post-create {
+.post-create,
+.post-edit {
   width: 50%;
   margin: 0 auto;
 }
 
-.post-create div {
+.post-create div,
+.post-edit div {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -54,4 +56,3 @@
   border-radius: 3px;
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.24), 0 3px 12px 0 rgba(0, 0, 0, 0.12);
 }
-

@@ -79,7 +79,7 @@ class PostCreate extends React.Component {
             required
           />
           <RaisedButton
-            style={{ 'margin-top': '20px' }}
+            style={{ marginTop: '20px' }}
             className="post-save-btn"
             onClick={() => {
               savePost(postTitle, postBody, postCategory, postAuthor);
