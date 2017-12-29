@@ -16,7 +16,7 @@ class CustomAppBar extends React.Component {
       <div className="custom-app-bar">
         <AppBar
           title={
-            <Link style={{ 'text-decoration': 'none', color: 'white' }} to="/">
+            <Link style={{ textDecoration: 'none', color: 'white' }} to="/">
               Readable
             </Link>
           }
