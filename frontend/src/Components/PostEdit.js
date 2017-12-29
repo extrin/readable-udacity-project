@@ -4,9 +4,10 @@ import { editPost } from '../Actions/Post';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Link } from 'react-router-dom';
 
 class PostEdit extends Component {
-  state = { postTitle: '', postBody: '' };
+  state = { postTitle: this.props.post.title, postBody: this.props.post.body };
 
   updateTitle = title => {
     this.setState({ postTitle: title });
@@ -25,7 +26,7 @@ class PostEdit extends Component {
           <TextField
             className="post-title"
             style={{ width: '95%' }}
-            value={post.title || postTitle}
+            value={postTitle}
             onChange={event => this.updateTitle(event.target.value)}
             hintText="Post title"
             errorText={this.value === '' && 'This field is required.'}
@@ -33,7 +34,7 @@ class PostEdit extends Component {
           />
           <TextField
             className="post-body"
-            value={post.body || postBody}
+            value={postBody}
             style={{ width: '95%' }}
             onChange={event => this.updateBody(event.target.value)}
             hintText="Post body"
@@ -46,11 +47,11 @@ class PostEdit extends Component {
           <p className="post-category">Category: {post.category}</p>
           <p className="post-author">Author nickname: {post.author}</p>
           <RaisedButton
-            style={{ marginTop: '20px' }}
+            style={{ marginTop: '20px', marginBottom: '10px' }}
             className="post-save-btn"
             onClick={() => savePost(post.id, postTitle, postBody)}
+            containerElement={<Link to={`/${post.category}/${post.id}`} />}
             label="SAVE"
-            href="/"
             primary={true}
           />
         </Paper>

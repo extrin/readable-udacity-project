@@ -104,7 +104,9 @@ class Posts extends Component {
                 />
                 <FlatButton
                   icon={<Edit />}
-                  href={`/${post.category}/${post.id}/edit`}
+                  containerElement={
+                    <Link to={`/${post.category}/${post.id}/edit`} />
+                  }
                   onClick={() => openPost(post.id)}
                 />
                 <FlatButton
