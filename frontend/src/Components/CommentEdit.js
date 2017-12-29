@@ -35,7 +35,7 @@ class CommentEdit extends Component {
 }
 
 const mapStateToProps = state => {
-  const comment = state.comments.filter(
+  const comment = state.comments.find(
     com => com.id === state.selections.selectedComment
   );
   return {
