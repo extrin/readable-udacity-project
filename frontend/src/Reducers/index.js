@@ -23,7 +23,7 @@ function posts(state = [], action) {
     case postActions.UPDATE_POST:
       return state.map(post => {
         if (post.id === action.id) {
-          post.title = action.id;
+          post.title = action.title;
           post.body = action.body;
         }
         return post;
