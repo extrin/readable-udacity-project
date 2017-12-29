@@ -32,61 +32,63 @@ class PostCreate extends React.Component {
 
     return (
       <div className="post-create">
-      <Paper zDepth={2}>
-        <TextField
-      	  className="post-title"
-          value={postTitle}
-          onChange={event => this.updateTitle(event.target.value)}
-          hintText="Post title"
-      	  errorText={postTitle==="" && "This field is required."}
-          required
-        />
-        <TextField
-	      className="post-body"
-          value={postBody}
-          onChange={event => this.updateBody(event.target.value)}
-          hintText="Post body"
-		  errorText={postBody==="" && "This field is required."}
-		  floatingLabelText="Write your post here"
-		  multiLine={true}
-		  rows={10}
-          required
-        />
+        <Paper zDepth={2}>
+          <TextField
+            className="post-title"
+            style={{ width: '95%' }}
+            value={postTitle}
+            onChange={event => this.updateTitle(event.target.value)}
+            hintText="Post title"
+            errorText={postTitle === '' && 'This field is required.'}
+            required
+          />
+          <TextField
+            className="post-body"
+            value={postBody}
+            style={{ width: '95%' }}
+            onChange={event => this.updateBody(event.target.value)}
+            hintText="Post body"
+            errorText={postBody === '' && 'This field is required.'}
+            floatingLabelText="Write your post here"
+            multiLine={true}
+            rows={10}
+            required
+          />
           <SelectField
-			className="post-category-select"
+            className="post-category-select"
             floatingLabelText="Post category"
-			errorText={postCategory==="" && "This field is required."}
+            errorText={postCategory === '' && 'This field is required.'}
             onChange={event => this.updateCategory(event.target.value)}
           >
             <MenuItem disabled value="Select category">
-            Select category
-          </MenuItem>
-          {categories.map(cat => (
-            <MenuItem key={cat.path} value={cat.name}>
-              {cat.name}
+              Select category
             </MenuItem>
-          ))}
+            {categories.map(cat => (
+              <MenuItem key={cat.path} value={cat.name}>
+                {cat.name}
+              </MenuItem>
+            ))}
           </SelectField>
-        <TextField
-		  className="post-author"
-          type="text"
-          value={postAuthor}
-          onChange={event => this.updateAuthor(event.target.value)}
-          hintText="Author nickname"
-		  errorText={postAuthor==="" && "This field is required."}
-          required
-        />
-        <RaisedButton
-          className="post-save-btn"
-          onClick={() => {
-            savePost(postTitle, postBody, postCategory, postAuthor);
-          }}
-        
-          label="SAVE"
-		  href="/"
-		  primary={true}
-        />
-		</Paper>
+          <TextField
+            className="post-author"
+            type="text"
+            value={postAuthor}
+            onChange={event => this.updateAuthor(event.target.value)}
+            hintText="Author nickname"
+            errorText={postAuthor === '' && 'This field is required.'}
+            required
+          />
+          <RaisedButton
+            style={{ 'margin-top': '20px' }}
+            className="post-save-btn"
+            onClick={() => {
+              savePost(postTitle, postBody, postCategory, postAuthor);
+            }}
+            label="SAVE"
+            href="/"
+            primary={true}
+          />
+        </Paper>
       </div>
     );
   }
@@ -98,7 +100,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   savePost: (title, body, author, category) => {
-    console.log(title, body, author, category);
     dispatch(createPost(title, body, author, category));
   }
 });

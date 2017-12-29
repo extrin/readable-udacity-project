@@ -8,21 +8,24 @@
   flex-wrap: wrap;
 }
 
-.create-post {
-  position: fixed;
-  right: 25px;
-  bottom: 25px;
-}
-
 .posts {
   width: 50%;
 }
 
 .post-create {
-  padding: 20px;
   width: 50%;
-  display: flex;
   margin: 0 auto;
-  align-content: center;
-  flex-wrap: wrap;
+}
+
+.post-create div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+
+.create-post {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
 }
