@@ -100,7 +100,7 @@ function selections(state = {}, action) {
     case postActions.UPDATE_SORTING_METHOD:
       return { ...state, selectedSortingMethod: action.method };
     case commentActions.SELECT_COMMENT:
-      return { ...state, selectComment: action.id };
+      return { ...state, selectedComment: action.id };
     default:
       return state;
   }
