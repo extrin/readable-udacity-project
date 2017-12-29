@@ -47,9 +47,7 @@ class Posts extends Component {
       minute: '2-digit',
       second: '2-digit'
     };
-    const res = new Date(timestamp).toLocaleString('en-US', options);
-    console.log(res);
-    return res;
+    return new Date(timestamp).toLocaleString('en-US', options);
   };
 
   render() {
