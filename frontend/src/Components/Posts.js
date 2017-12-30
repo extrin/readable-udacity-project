@@ -23,6 +23,7 @@ import {
   deletePost
 } from '../Actions/Post';
 import { getComments } from '../Actions/Comment';
+import { getStringDate, trim } from '../Util/Helpers';
 
 class Posts extends Component {
   selectOptions = [
@@ -31,24 +32,6 @@ class Posts extends Component {
     { name: 'Timestamp (asc).', value: 'Timestamp (asc).' },
     { name: 'Timestamp (desc.)', value: 'Timestamp (desc.)' }
   ];
-
-  trim = str => {
-    return str.length > 255 ? str.slice(0, 16) + '...' : str;
-  };
-
-  getPostDate = timestamp => {
-    const options = {
-      hourCycle: 'h24',
-      year: 'numeric',
-      month: 'long',
-      day: '2-digit',
-      weekday: 'long',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    };
-    return new Date(timestamp).toLocaleString('en-US', options);
-  };
 
   render() {
     const {
@@ -125,11 +108,9 @@ class Posts extends Component {
                     {post.title}
                   </Link>
                 }
-                subtitle={`${this.getPostDate(post.timestamp)} by ${
-                  post.author
-                }`}
+                subtitle={`${getStringDate(post.timestamp)} by ${post.author}`}
               />
-              <CardText>{this.trim(post.body)}</CardText>
+              <CardText>{trim(post.body)}</CardText>
               <Link
                 className="post-comments-count"
                 to={`/${post.category}/${post.id}`}
