@@ -3,25 +3,25 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { deletePost, changeVotescore, selectPost } from '../Actions/Post';
+import {
+  openCommentCreateModal,
+  closeCommentCreateModal
+} from '../Actions/Modal';
 import CommentCreate from './CommentCreate';
 import Comments from './Comments';
 
 class PostView extends Component {
-  state = { commentModalOpen: false };
-
-  openCommentModal = () =>
-    this.setState(() => ({
-      commentModalOpen: true
-    }));
-
-  closeCommentModal = () =>
-    this.setState(() => ({
-      commentModalOpen: false
-    }));
-
   render() {
-    const { commentModalOpen } = this.state;
-    const { post, upVote, downVote, removePost, openPost } = this.props;
+    const commentModalOpen = this.props.modalMode === 'opened' ? true : false;
+    const {
+      post,
+      upVote,
+      downVote,
+      removePost,
+      openPost,
+      openCommentModal,
+      closeCommentModal
+    } = this.props;
     return (
       <div className="post-view">
         <div className="post-details">
@@ -53,7 +53,7 @@ class PostView extends Component {
         </div>
         <div className="add-comment">
           <button
-            onClick={() => this.openCommentModal()}
+            onClick={() => openCommentModal()}
             className="comment-add-btn"
           >
             Add new Comment
@@ -62,7 +62,7 @@ class PostView extends Component {
             className="modal"
             overlayClassName="overlay"
             isOpen={commentModalOpen}
-            onRequestClose={this.closeCommentModal}
+            onRequestClose={() => closeCommentModal()}
             contentLabel="Modal"
           >
             <CommentCreate />
@@ -77,14 +77,17 @@ class PostView extends Component {
 }
 
 const mapStateToProps = state => ({
-  post: state.posts.find(post => post.id === state.selections.selectedPost)
+  post: state.posts.find(post => post.id === state.selections.selectedPost),
+  modalMode: state.modals.commentCreateModal
 });
 
 const mapDispatchToProps = dispatch => ({
   upVote: id => dispatch(changeVotescore(id, 'upVote')),
   downVote: id => dispatch(changeVotescore(id, 'downVote')),
   removePost: id => dispatch(deletePost(id)),
-  openPost: id => dispatch(selectPost(id))
+  openPost: id => dispatch(selectPost(id)),
+  openCommentModal: () => dispatch(openCommentCreateModal()),
+  closeCommentModal: () => dispatch(closeCommentCreateModal())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostView);
