@@ -86,8 +86,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  upVote: (id, option) => dispatch(changeVotescore(id, 'upVote')),
-  downVote: (id, option) => dispatch(changeVotescore(id, 'downVote')),
+  upVote: id => dispatch(changeVotescore(id, 'upVote')),
+  downVote: id => dispatch(changeVotescore(id, 'downVote')),
   removeComment: id => dispatch(deleteComment(id)),
   openForEdit: id => {
     dispatch(selectComment(id));
