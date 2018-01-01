@@ -18,7 +18,7 @@ import ArrowUp from 'material-ui/svg-icons/navigation/arrow-upward';
 import ArrowDown from 'material-ui/svg-icons/navigation/arrow-downward';
 import {
   selectPost,
-  changeVotescore,
+  changePostVotescore,
   updateSortingMethod,
   deletePost
 } from '../Actions/Post';
@@ -139,8 +139,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(selectPost(id));
     dispatch(getComments(id));
   },
-  upVote: id => dispatch(changeVotescore(id, 'upVote')),
-  downVote: id => dispatch(changeVotescore(id, 'downVote')),
+  upVote: id => dispatch(changePostVotescore(id, 'upVote')),
+  downVote: id => dispatch(changePostVotescore(id, 'downVote')),
   changeSorting: option => dispatch(updateSortingMethod(option)),
   removePost: id => dispatch(deletePost(id))
 });

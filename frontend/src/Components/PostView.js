@@ -12,7 +12,7 @@ import Comment from 'material-ui/svg-icons/communication/comment';
 import Remove from 'material-ui/svg-icons/content/clear';
 import Edit from 'material-ui/svg-icons/image/edit';
 import Subheader from 'material-ui/Subheader';
-import { deletePost, changeVotescore, selectPost } from '../Actions/Post';
+import { deletePost, changePostVotescore, selectPost } from '../Actions/Post';
 import {
   openCommentCreateModal,
   closeCommentCreateModal
@@ -123,8 +123,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  upVote: id => dispatch(changeVotescore(id, 'upVote')),
-  downVote: id => dispatch(changeVotescore(id, 'downVote')),
+  upVote: id => dispatch(changePostVotescore(id, 'upVote')),
+  downVote: id => dispatch(changePostVotescore(id, 'downVote')),
   removePost: id => dispatch(deletePost(id)),
   openPost: id => dispatch(selectPost(id)),
   openCommentModal: () => dispatch(openCommentCreateModal()),

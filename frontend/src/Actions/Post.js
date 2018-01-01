@@ -72,7 +72,7 @@ export const voteOnPost = (id, option) => {
   };
 };
 
-export const changeVotescore = (id, option) => dispatch => {
+export const changePostVotescore = (id, option) => dispatch => {
   return API.voteOnPost(id, option).then(dispatch(voteOnPost(id, option)));
 };
 

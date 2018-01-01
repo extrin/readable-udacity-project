@@ -10,7 +10,7 @@ import ArrowDown from 'material-ui/svg-icons/navigation/arrow-downward';
 import { connect } from 'react-redux';
 import {
   deleteComment,
-  changeVotescore,
+  changeCommentVotescore,
   selectComment
 } from '../Actions/Comment';
 import { openCommentEditModal, closeCommentEditModal } from '../Actions/Modal';
@@ -86,8 +86,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  upVote: id => dispatch(changeVotescore(id, 'upVote')),
-  downVote: id => dispatch(changeVotescore(id, 'downVote')),
+  upVote: id => dispatch(changeCommentVotescore(id, 'upVote')),
+  downVote: id => dispatch(changeCommentVotescore(id, 'downVote')),
   removeComment: id => dispatch(deleteComment(id)),
   openForEdit: id => {
     dispatch(selectComment(id));
