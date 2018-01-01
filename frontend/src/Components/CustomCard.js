@@ -17,12 +17,13 @@ import { deletePost, changePostVotescore, selectPost } from '../Actions/Post';
 import {
   deleteComment,
   changeCommentVotescore,
-  selectComment
+  selectComment,
+  getComments
 } from '../Actions/Comment';
 import { openCommentEditModal, closeCommentEditModal } from '../Actions/Modal';
 
 class CustomCard extends React.Component {
-  propTypes = {
+  static propTypes = {
     mode: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired
   };
@@ -35,7 +36,7 @@ class CustomCard extends React.Component {
           containerElement={
             <Link
               className="post-edit-link"
-              to={`/${this.props.post.category}/${this.props.id}/edit`}
+              to={`/${this.props.text.category}/${this.props.id}/edit`}
             />
           }
           onClick={() => this.props.selectItem(this.props.id)}
@@ -47,7 +48,7 @@ class CustomCard extends React.Component {
       return (
         <IconButton
           className="comment-edit-btn"
-          onClick={() => this.props.openCommentModal(comment.id)}
+          onClick={() => this.props.openCommentModal(this.props.id)}
         >
           <Edit />
         </IconButton>
@@ -79,11 +80,13 @@ class CustomCard extends React.Component {
           containerElement={
             <Link
               className="post-view-link"
-              to={`/${this.props.post.category}/${this.props.id}`}
+              to={`/${this.props.text.category}/${this.props.id}`}
             />
           }
           onClick={() => this.props.openItem(this.props.id)}
           icon={<Comment />}
+          label={this.props.text.commentCount || '0'}
+          labelPosition="after"
         />
       );
     else return <div />;
@@ -129,7 +132,7 @@ class CustomCard extends React.Component {
           <Subheader className="subtitle">
             {getStringDate(text.timestamp)} by {text.author}
           </Subheader>
-          <div className="body">
+          <div className="text-body">
             <p>{text.body}</p>
           </div>
           {this.renderCommentsCount()}
