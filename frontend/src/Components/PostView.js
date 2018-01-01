@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
+import IconButton from 'material-ui/IconButton';
+import FlatButton from 'material-ui/FlatButton';
+import Paper from 'material-ui/Paper';
+import Star from 'material-ui/svg-icons/toggle/star';
+import ArrowUp from 'material-ui/svg-icons/navigation/arrow-upward';
+import ArrowDown from 'material-ui/svg-icons/navigation/arrow-downward';
+import Comment from 'material-ui/svg-icons/communication/comment';
+import Remove from 'material-ui/svg-icons/content/clear';
+import Edit from 'material-ui/svg-icons/image/edit';
+import Subheader from 'material-ui/Subheader';
 import { deletePost, changeVotescore, selectPost } from '../Actions/Post';
 import {
   openCommentCreateModal,
@@ -9,6 +19,7 @@ import {
 } from '../Actions/Modal';
 import CommentCreate from './CommentCreate';
 import Comments from './Comments';
+import { getStringDate } from '../Util/Helpers';
 
 class PostView extends Component {
   render() {
@@ -24,50 +35,80 @@ class PostView extends Component {
     } = this.props;
     return (
       <div className="post-view">
-        <div className="post-details">
-          <div className="voteScore">
-            {post.voteScore}
-            <button className="vote-up" onClick={() => upVote(post.id)}>
-              Vote Up
-            </button>
-            <button className="vote-down" onClick={() => downVote(post.id)}>
-              Vote Down
-            </button>
-          </div>
+        <Paper zDepth={2} className="post-details">
+          <Paper zDepth={1} className="post-actions">
+            <div className="post-actions-voting">
+              <IconButton
+                className="vote-up"
+                onClick={() => upVote(post.id)}
+                tooltip="Vote Up"
+              >
+                <ArrowUp />
+              </IconButton>
+              <FlatButton
+                disabled
+                tooltip="Votescore"
+                label={post.voteScore}
+                labelPosition="after"
+                icon={<Star color="pink" />}
+              />
+
+              <IconButton
+                className="vote-down"
+                onClick={() => downVote(post.id)}
+                tooltip="Vote Down"
+              >
+                <ArrowDown />
+              </IconButton>
+            </div>
+            <div className="post-actions-managing">
+              <IconButton
+                className="post-edit-btn"
+                containerElement={
+                  <Link
+                    className="post-edit-link"
+                    to={`/${post.category}/${post.id}/edit`}
+                  />
+                }
+                onClick={() => openPost(post.id)}
+              >
+                <Edit />
+              </IconButton>
+              <IconButton
+                className="post-delete-btn"
+                onClick={() => removePost(post.id)}
+              >
+                <Remove />
+              </IconButton>
+            </div>
+          </Paper>
           <h2 className="post-title">{post.title}</h2>
-          <div className="post-author">by {post.author}</div>
-          <div className="post-timestamp">{post.timestamp}</div>
-          <Link
-            className="post-edit-link"
-            to={`/${post.category}/${post.id}/edit`}
-            onClick={() => openPost(post.id)}
-          >
-            Edit
-          </Link>
-          <button className="post-delete" onClick={() => removePost(post.id)}>
-            Delete post
-          </button>
+          <Subheader className="post-author">
+            {getStringDate(post.timestamp)} by {post.author}
+          </Subheader>
+
           <div className="post-body">
             <p>{post.body}</p>
           </div>
-        </div>
-        <div className="add-comment">
-          <button
-            onClick={() => openCommentModal()}
-            className="comment-add-btn"
-          >
-            Add new Comment
-          </button>
-          <Modal
-            className="modal"
-            overlayClassName="overlay"
-            isOpen={commentModalOpen}
-            onRequestClose={() => closeCommentModal()}
-            contentLabel="Modal"
-          >
-            <CommentCreate />
-          </Modal>
-        </div>
+        </Paper>
+        <FlatButton
+          className="add-comment-btn"
+          onClick={() => openCommentModal()}
+          label="Add new Comment"
+          labelPosition="before"
+          icon={<Comment />}
+        />
+
+        <Modal
+          className="modal"
+          overlayClassName="overlay"
+          isOpen={commentModalOpen}
+          onRequestClose={() => closeCommentModal()}
+          contentLabel="Modal"
+        >
+          <CommentCreate />
+        </Modal>
+
         <div className="post-comments">
           <Comments />
         </div>
