@@ -15,12 +15,16 @@
   flex-flow: column nowrap;
 }
 
-.post-actions-managing {
+.wrapper {
+  margin-bottom: 5px;
+}
+
+.managing {
   display: inline;
   float: right;
 }
 
-.post-actions-voting {
+.voting {
   display: inline-block;
 }
 
@@ -33,9 +37,14 @@ h2 {
   margin: 10px;
 }
 
-.post-body {
-  margin: 5px;
-  font-size: 18px;
+.subtitle {
+  margin-right: 10px;
+}
+
+.text-body {
+  margin-left: 10px;
+  padding-bottom: 5px;
+  font-size: 16px;
 }
 
 .posts {
