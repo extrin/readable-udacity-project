@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { createPost } from '../Actions/Post';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
@@ -18,8 +19,8 @@ class PostCreate extends React.Component {
     this.setState({ postBody: body });
   };
 
-  updateCategory = cat => {
-    this.setState({ postCategory: cat });
+  updateCategory = (event, key, payload) => {
+    this.setState({ postCategory: payload });
   };
 
   updateAuthor = author => {
@@ -58,15 +59,22 @@ class PostCreate extends React.Component {
             className="post-category-select"
             floatingLabelText="Post category"
             errorText={postCategory === '' && 'This field is required.'}
-            onChange={event => this.updateCategory(event.target.value)}
+            value={postCategory}
+            onChange={(event, key, payload) =>
+              this.updateCategory(event, key, payload)
+            }
           >
-            <MenuItem disabled value="Select category">
-              Select category
-            </MenuItem>
+            <MenuItem
+              disabled
+              value="Select category"
+              primaryText="Select category"
+            />
             {categories.map(cat => (
-              <MenuItem key={cat.path} value={cat.name}>
-                {cat.name}
-              </MenuItem>
+              <MenuItem
+                key={cat.path}
+                value={cat.name}
+                primaryText={cat.name}
+              />
             ))}
           </SelectField>
           <TextField
@@ -82,10 +90,10 @@ class PostCreate extends React.Component {
             style={{ marginTop: '20px', marginBottom: '10px' }}
             className="post-save-btn"
             onClick={() => {
-              savePost(postTitle, postBody, postCategory, postAuthor);
+              savePost(postTitle, postBody, postAuthor, postCategory);
             }}
             label="SAVE"
-            href="/"
+            containerElement={<Link to="/" />}
             primary={true}
           />
         </Paper>
