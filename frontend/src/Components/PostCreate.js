@@ -1,9 +1,13 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { createPost } from '../Actions/Post';
 import { connect } from 'react-redux';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 
-class PostCreate extends Component {
+class PostCreate extends React.Component {
   state = { postTitle: '', postBody: '', postCategory: '', postAuthor: '' };
 
   updateTitle = title => {
@@ -25,51 +29,66 @@ class PostCreate extends Component {
   render() {
     const { categories, savePost } = this.props;
     const { postTitle, postBody, postCategory, postAuthor } = this.state;
+
     return (
       <div className="post-create">
-        <Link to="/">Home</Link>
-        <input
-          type="text"
-          value={postTitle}
-          onChange={event => this.updateTitle(event.target.value)}
-          placeholder="Post title..."
-          required
-        />
-        <textarea
-          value={postBody}
-          onChange={event => this.updateBody(event.target.value)}
-          placeholder="Post body..."
-          required
-        />
-        <select
-          className="post-category-select"
-          onChange={event => this.updateCategory(event.target.value)}
-        >
-          <option disabled value="Select category">
-            Select category
-          </option>
-          {categories.map(cat => (
-            <option key={cat.path} value={cat.name}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
-        <input
-          type="text"
-          value={postAuthor}
-          onChange={event => this.updateAuthor(event.target.value)}
-          placeholder="Author nickname"
-          required
-        />
-        <button
-          className="post-save-btn"
-          onClick={() => {
-            console.log(postTitle, postBody, postCategory, postAuthor);
-            savePost(postTitle, postBody, postCategory, postAuthor);
-          }}
-        >
-          <Link to="/">Save</Link>
-        </button>
+        <Paper zDepth={2}>
+          <TextField
+            className="post-title"
+            style={{ width: '95%' }}
+            value={postTitle}
+            onChange={event => this.updateTitle(event.target.value)}
+            hintText="Post title"
+            errorText={postTitle === '' && 'This field is required.'}
+            required
+          />
+          <TextField
+            className="post-body"
+            value={postBody}
+            style={{ width: '95%' }}
+            onChange={event => this.updateBody(event.target.value)}
+            hintText="Post body"
+            errorText={postBody === '' && 'This field is required.'}
+            floatingLabelText="Write your post here"
+            multiLine={true}
+            rows={10}
+            required
+          />
+          <SelectField
+            className="post-category-select"
+            floatingLabelText="Post category"
+            errorText={postCategory === '' && 'This field is required.'}
+            onChange={event => this.updateCategory(event.target.value)}
+          >
+            <MenuItem disabled value="Select category">
+              Select category
+            </MenuItem>
+            {categories.map(cat => (
+              <MenuItem key={cat.path} value={cat.name}>
+                {cat.name}
+              </MenuItem>
+            ))}
+          </SelectField>
+          <TextField
+            className="post-author"
+            type="text"
+            value={postAuthor}
+            onChange={event => this.updateAuthor(event.target.value)}
+            hintText="Author nickname"
+            errorText={postAuthor === '' && 'This field is required.'}
+            required
+          />
+          <RaisedButton
+            style={{ marginTop: '20px', marginBottom: '10px' }}
+            className="post-save-btn"
+            onClick={() => {
+              savePost(postTitle, postBody, postCategory, postAuthor);
+            }}
+            label="SAVE"
+            href="/"
+            primary={true}
+          />
+        </Paper>
       </div>
     );
   }
@@ -81,7 +100,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   savePost: (title, body, author, category) => {
-    console.log(title, body, author, category);
     dispatch(createPost(title, body, author, category));
   }
 });

@@ -2,12 +2,28 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
+  Card,
+  CardActions,
+  CardTitle,
+  CardHeader,
+  CardText
+} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import Comment from 'material-ui/svg-icons/communication/comment';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import Remove from 'material-ui/svg-icons/content/clear';
+import Edit from 'material-ui/svg-icons/image/edit';
+import ArrowUp from 'material-ui/svg-icons/navigation/arrow-upward';
+import ArrowDown from 'material-ui/svg-icons/navigation/arrow-downward';
+import {
   selectPost,
   changeVotescore,
   updateSortingMethod,
   deletePost
 } from '../Actions/Post';
 import { getComments } from '../Actions/Comment';
+import { getStringDate, trim } from '../Util/Helpers';
 
 class Posts extends Component {
   selectOptions = [
@@ -16,10 +32,6 @@ class Posts extends Component {
     { name: 'Timestamp (asc).', value: 'Timestamp (asc).' },
     { name: 'Timestamp (desc.)', value: 'Timestamp (desc.)' }
   ];
-
-  trim = str => {
-    return str.length > 255 ? str.slice(0, 16) + '...' : str;
-  };
 
   render() {
     const {
@@ -39,10 +51,10 @@ class Posts extends Component {
 
     return (
       <div className="posts">
-        <h1>Posts</h1>
         <div className="posts-sort">
-          Sort by...
-          <select
+          <SelectField
+            fullWidth={true}
+            floatingLabelText="Sort by..."
             className="sort-select"
             value={
               this.selectOptions.filter(opt => opt.id === sortingMethodId).value
@@ -50,58 +62,65 @@ class Posts extends Component {
             onChange={event => changeSorting(event.target.value)}
           >
             {this.selectOptions.map(opt => (
-              <option value={opt.value} key={opt.name}>
-                {opt.value}
-              </option>
+              <MenuItem
+                value={opt.value}
+                key={opt.name}
+                primaryText={opt.value}
+              />
             ))}
-          </select>
+          </SelectField>
         </div>
         <div className="posts-list">
           {filteredPosts.map(post => (
-            <div className="post" key={post.id}>
-              <Link
-                className="post-title"
-                to={`/${post.category}/${post.id}`}
-                onClick={() => openPost(post.id)}
-              >
-                {post.title}
-              </Link>
-              <Link
-                className="post-edit-link"
-                to={`/${post.category}/${post.id}/edit`}
-                onClick={() => openPost(post.id)}
-              >
-                Edit
-              </Link>
-              <button
-                className="post-delete-btn"
-                onClick={() => removePost(post.id)}
-              >
-                Delete
-              </button>
-              <div className="post-author">by {post.author}</div>
-              <div className="post-timestamp">{post.timestamp}</div>
-              <div className="voteScore">
-                {post.voteScore}
-                <button className="vote-up" onClick={() => upVote(post.id)}>
-                  Vote Up
-                </button>
-                <button className="vote-down" onClick={() => downVote(post.id)}>
-                  Vote Down
-                </button>
-              </div>
-              <p className="post-body-cut">{this.trim(post.body)}</p>
+            <Card className="post" key={post.id}>
+              <CardActions>
+                <FlatButton
+                  className="vote-up"
+                  icon={<ArrowUp color="red" />}
+                  onClick={() => upVote(post.id)}
+                />
+                <FlatButton label={post.voteScore} disabled />
+                <FlatButton
+                  className="vote-down"
+                  icon={<ArrowDown color="blue" />}
+                  onClick={() => downVote(post.id)}
+                />
+                <FlatButton
+                  icon={<Edit />}
+                  containerElement={
+                    <Link to={`/${post.category}/${post.id}/edit`} />
+                  }
+                  onClick={() => openPost(post.id)}
+                />
+                <FlatButton
+                  icon={<Remove />}
+                  onClick={() => removePost(post.id)}
+                />
+              </CardActions>
+              <CardTitle
+                title={
+                  <Link
+                    className="post-title"
+                    style={{ textDecoration: 'none' }}
+                    to={`/${post.category}/${post.id}`}
+                    onClick={() => openPost(post.id)}
+                  >
+                    {post.title}
+                  </Link>
+                }
+                subtitle={`${getStringDate(post.timestamp)} by ${post.author}`}
+              />
+              <CardText>{trim(post.body)}</CardText>
               <Link
                 className="post-comments-count"
                 to={`/${post.category}/${post.id}`}
                 onClick={() => {
-                  console.log(post.id);
                   openPost(post.id);
                 }}
               >
-                {post.commentCount}
+                <CardHeader title={post.commentCount} avatar={<Comment />} />
               </Link>
-            </div>
+            </Card>
           ))}
         </div>
       </div>

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import * as postActions from '../Actions/Post';
 import * as commentActions from '../Actions/Comment';
 import * as categoryActions from '../Actions/Category';
+import * as modalActions from '../Actions/Modal';
 
 function posts(state = [], action) {
   switch (action.type) {
@@ -23,7 +24,7 @@ function posts(state = [], action) {
     case postActions.UPDATE_POST:
       return state.map(post => {
         if (post.id === action.id) {
-          post.title = action.id;
+          post.title = action.title;
           post.body = action.body;
         }
         return post;
@@ -100,7 +101,25 @@ function selections(state = {}, action) {
     case postActions.UPDATE_SORTING_METHOD:
       return { ...state, selectedSortingMethod: action.method };
     case commentActions.SELECT_COMMENT:
-      return { ...state, selectComment: action.id };
+      return { ...state, selectedComment: action.id };
+    default:
+      return state;
+  }
+}
+
+function modals(
+  state = { commentCreateModal: 'closed', commentEditModal: 'closed' },
+  action
+) {
+  switch (action.type) {
+    case modalActions.OPEN_COMMENT_CREATE_MODAL:
+      return { ...state, commentCreateModal: 'opened' };
+    case modalActions.CLOSE_COMMENT_CREATE_MODAL:
+      return { ...state, commentCreateModal: 'closed' };
+    case modalActions.OPEN_COMMENT_EDIT_MODAL:
+      return { ...state, commentEditModal: 'opened' };
+    case modalActions.CLOSE_COMMENT_EDIT_MODAL:
+      return { ...state, commentEditModal: 'closed' };
     default:
       return state;
   }
@@ -110,5 +129,6 @@ export default combineReducers({
   posts,
   comments,
   categories,
-  selections
+  selections,
+  modals
 });

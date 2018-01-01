@@ -1,28 +1,86 @@
-.App {
-  text-align: center;
+.app-body {
+  padding-top: 70px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.default-view {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
+.post-view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+
+.post-actions-managing {
+  display: inline;
+  float: right;
+}
+
+.post-actions-voting {
+  display: inline-block;
+}
+
+h2 {
+  color: #333333;
+  font-family: 'Bitter', serif;
+  font-size: 40px;
+  font-weight: normal;
+  line-height: 44px;
+  margin: 10px;
+}
+
+.post-body {
+  margin: 5px;
+  font-size: 18px;
+}
+
+.posts {
+  width: 700px;
+}
+
+.post-create,
+.post-edit {
+  width: 700px;
+  margin: 0 auto;
+}
+
+.post-create div,
+.post-edit div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+
+.create-post {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.modal {
+  margin: 100px auto;
+  width: 250px;
+  height: auto;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(255, 255, 255);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
   padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  border-radius: 3px;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.24), 0 3px 12px 0 rgba(0, 0, 0, 0.12);
 }
