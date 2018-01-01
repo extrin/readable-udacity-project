@@ -1,31 +1,11 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { connect } from 'react-redux';
-import {
-  Card,
-  CardActions,
-  CardTitle,
-  CardHeader,
-  CardText
-} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import Comment from 'material-ui/svg-icons/communication/comment';
+import { updateSortingMethod } from '../Actions/Post';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import Remove from 'material-ui/svg-icons/content/clear';
-import Edit from 'material-ui/svg-icons/image/edit';
-import ArrowUp from 'material-ui/svg-icons/navigation/arrow-upward';
-import ArrowDown from 'material-ui/svg-icons/navigation/arrow-downward';
-import {
-  selectPost,
-  changeVotescore,
-  updateSortingMethod,
-  deletePost
-} from '../Actions/Post';
-import { getComments } from '../Actions/Comment';
-import { getStringDate, trim } from '../Util/Helpers';
+import CustomCard from './CustomCard';
 
-class Posts extends Component {
+class Posts extends React.Component {
   selectOptions = [
     { name: 'Vote score (asc.)', value: 'Vote score (asc.)' },
     { name: 'Vote score (desc.)', value: 'Vote score (desc.)' },
@@ -34,16 +14,7 @@ class Posts extends Component {
   ];
 
   render() {
-    const {
-      posts,
-      category,
-      sortingMethodId,
-      openPost,
-      upVote,
-      downVote,
-      changeSorting,
-      removePost
-    } = this.props;
+    const { posts, category, sortingMethodId, changeSorting } = this.props;
 
     const filteredPosts = category
       ? posts.filter(post => post.category === category.name)
@@ -72,55 +43,7 @@ class Posts extends Component {
         </div>
         <div className="posts-list">
           {filteredPosts.map(post => (
-            <Card className="post" key={post.id}>
-              <CardActions>
-                <FlatButton
-                  className="vote-up"
-                  icon={<ArrowUp color="red" />}
-                  onClick={() => upVote(post.id)}
-                />
-                <FlatButton label={post.voteScore} disabled />
-                <FlatButton
-                  className="vote-down"
-                  icon={<ArrowDown color="blue" />}
-                  onClick={() => downVote(post.id)}
-                />
-                <FlatButton
-                  icon={<Edit />}
-                  containerElement={
-                    <Link to={`/${post.category}/${post.id}/edit`} />
-                  }
-                  onClick={() => openPost(post.id)}
-                />
-                <FlatButton
-                  icon={<Remove />}
-                  onClick={() => removePost(post.id)}
-                />
-              </CardActions>
-              <CardTitle
-                title={
-                  <Link
-                    className="post-title"
-                    style={{ textDecoration: 'none' }}
-                    to={`/${post.category}/${post.id}`}
-                    onClick={() => openPost(post.id)}
-                  >
-                    {post.title}
-                  </Link>
-                }
-                subtitle={`${getStringDate(post.timestamp)} by ${post.author}`}
-              />
-              <CardText>{trim(post.body)}</CardText>
-              <Link
-                className="post-comments-count"
-                to={`/${post.category}/${post.id}`}
-                onClick={() => {
-                  openPost(post.id);
-                }}
-              >
-                <CardHeader title={post.commentCount} avatar={<Comment />} />
-              </Link>
-            </Card>
+            <CustomCard key={post.id} mode="post" id={post.id} />
           ))}
         </div>
       </div>
@@ -135,14 +58,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  openPost: id => {
-    dispatch(selectPost(id));
-    dispatch(getComments(id));
-  },
-  upVote: id => dispatch(changeVotescore(id, 'upVote')),
-  downVote: id => dispatch(changeVotescore(id, 'downVote')),
-  changeSorting: option => dispatch(updateSortingMethod(option)),
-  removePost: id => dispatch(deletePost(id))
+  changeSorting: option => dispatch(updateSortingMethod(option))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);
