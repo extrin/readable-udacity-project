@@ -30,7 +30,7 @@ class Comments extends Component {
     const editModalOpen = this.props.modalMode === 'opened' ? true : false;
     return (
       <div className="comments-list">
-        {comments.sort(sortBy('timestamp')).map(comment => (
+        {comments.sort(sortBy('-timestamp')).map(comment => (
           <Card className="comment" key={comment.id}>
             <CardActions>
               <FlatButton
