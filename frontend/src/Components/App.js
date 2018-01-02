@@ -16,10 +16,9 @@ class App extends Component {
           <div className="app">
             <CustomAppBar />
             <div className="app-body">
-              <Route exact path="/" component={MainView} />
               <Switch>
                 <Route exact path="/create" component={PostCreate} />
-                <Route exact path="/:category" component={MainView} />
+                <Route exact path="/:category?" component={MainView} />
               </Switch>
               <Route exact path="/:category/:post_id" component={PostView} />
               <Route
