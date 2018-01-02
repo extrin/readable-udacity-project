@@ -17,6 +17,7 @@
 
 .wrapper {
   margin-bottom: 5px;
+  width: 700px;
 }
 
 .managing {
@@ -45,10 +46,6 @@ h2 {
   margin-left: 10px;
   padding-bottom: 5px;
   font-size: 16px;
-}
-
-.posts {
-  width: 700px;
 }
 
 .post-create,
