@@ -42,8 +42,8 @@ class PostView extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  postId: state.selections.selectedPost,
+const mapStateToProps = (state, props) => ({
+  postId: props.match.params.post_id,
   modalMode: state.modals.commentCreateModal
 });
 
