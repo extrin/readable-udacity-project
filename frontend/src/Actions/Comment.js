@@ -57,15 +57,16 @@ export const editComment = (id, body) => dispatch => {
   );
 };
 
-export const removeComment = id => {
+export const removeComment = (id, parentId) => {
   return {
     type: REMOVE_COMMENT,
-    id
+    id,
+    parentId
   };
 };
 
-export const deleteComment = id => dispatch => {
-  return API.deleteComment(id).then(dispatch(removeComment(id)));
+export const deleteComment = (id, parentId) => dispatch => {
+  return API.deleteComment(id).then(dispatch(removeComment(id, parentId)));
 };
 
 export const voteOnComment = (id, option) => {

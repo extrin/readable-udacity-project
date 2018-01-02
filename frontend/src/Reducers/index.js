@@ -39,6 +39,16 @@ function posts(state = [], action) {
         }
         return post;
       });
+    case commentActions.ADD_COMMENT:
+      return state.map(post => {
+        if (post.id === action.parentId) post.commentCount++;
+        return post;
+      });
+    case commentActions.REMOVE_COMMENT:
+      return state.map(post => {
+        if (post.id === action.parentId) post.commentCount--;
+        return post;
+      });
     default:
       return state;
   }

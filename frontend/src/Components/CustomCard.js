@@ -20,7 +20,7 @@ import {
   selectComment,
   getComments
 } from '../Actions/Comment';
-import { openCommentEditModal, closeCommentEditModal } from '../Actions/Modal';
+import { openCommentEditModal } from '../Actions/Modal';
 
 class CustomCard extends React.Component {
   static propTypes = {
@@ -51,6 +51,29 @@ class CustomCard extends React.Component {
           onClick={() => this.props.openCommentModal(this.props.id)}
         >
           <Edit />
+        </IconButton>
+      );
+  };
+
+  renderDeleteButton = () => {
+    if (this.props.mode === 'post')
+      return (
+        <IconButton
+          className="delete-btn"
+          onClick={() => this.props.deleteItem(this.props.id)}
+        >
+          <Remove />
+        </IconButton>
+      );
+    else
+      return (
+        <IconButton
+          className="delete-btn"
+          onClick={() =>
+            this.props.deleteItem(this.props.id, this.props.text.parentId)
+          }
+        >
+          <Remove />
         </IconButton>
       );
   };
@@ -93,7 +116,7 @@ class CustomCard extends React.Component {
   };
 
   render() {
-    const { upVote, downVote, deleteItem, id, text } = this.props;
+    const { upVote, downVote, id, text } = this.props;
     return (
       <div className="wrapper">
         <Paper zDepth={2}>
@@ -123,9 +146,7 @@ class CustomCard extends React.Component {
             </div>
             <div className="managing">
               {this.renderEditButton()}
-              <IconButton className="delete-btn" onClick={() => deleteItem(id)}>
-                <Remove />
-              </IconButton>
+              {this.renderDeleteButton()}
             </div>
           </Paper>
           {this.renderTitle()}
@@ -147,8 +168,7 @@ const mapStateToProps = (state, props) => {
     return { text: state.posts.find(post => post.id === props.id) };
   else
     return {
-      text: state.comments.find(comment => comment.id === props.id),
-      modalMode: state.modals.commentEditModal
+      text: state.comments.find(comment => comment.id === props.id)
     };
 };
 
@@ -172,8 +192,7 @@ const mapDispatchToProps = (dispatch, props) => {
         dispatch(selectComment(id));
         dispatch(openCommentEditModal());
       },
-      closeCommentModal: () => dispatch(closeCommentEditModal()),
-      deleteItem: id => dispatch(deleteComment(id))
+      deleteItem: (id, parentId) => dispatch(deleteComment(id, parentId))
     };
 };
 
