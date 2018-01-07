@@ -19,8 +19,8 @@ class PostCreate extends React.Component {
     this.setState({ postBody: body });
   };
 
-  updateCategory = (event, key, payload) => {
-    this.setState({ postCategory: payload });
+  updateCategory = cat => {
+    this.setState({ postCategory: cat });
   };
 
   updateAuthor = author => {
@@ -60,9 +60,7 @@ class PostCreate extends React.Component {
             floatingLabelText="Post category"
             errorText={postCategory === '' && 'This field is required.'}
             value={postCategory}
-            onChange={(event, key, payload) =>
-              this.updateCategory(event, key, payload)
-            }
+            onChange={(event, key, payload) => this.updateCategory(payload)}
           >
             <MenuItem
               disabled
