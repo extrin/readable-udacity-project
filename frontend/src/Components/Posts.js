@@ -11,7 +11,9 @@ class Posts extends React.Component {
     { value: 'Vote score (asc.)', option: 'voteScore' },
     { value: 'Vote score (desc.)', option: '-voteScore' },
     { value: 'Timestamp (asc).', option: 'timestamp' },
-    { value: 'Timestamp (desc.)', option: '-timestamp' }
+    { value: 'Timestamp (desc.)', option: '-timestamp' },
+    { value: 'Comment count (asc.)', option: 'commentCount' },
+    { value: 'Comment count (desc.)', option: '-commentCount' }
   ];
 
   render() {
