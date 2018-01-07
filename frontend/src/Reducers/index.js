@@ -102,7 +102,14 @@ function categories(state = [], action) {
   }
 }
 
-function selections(state = {}, action) {
+const initialSelections = {
+  selectedCategory: '',
+  selectedPost: '',
+  selectedComment: '',
+  selectedSortingMethod: 'Vote score (asc.)'
+};
+
+function selections(state = initialSelections, action) {
   switch (action.type) {
     case categoryActions.SELECT_CATEGORY:
       return { ...state, selectedCategory: action.category };
