@@ -13,7 +13,7 @@ import ArrowDown from 'material-ui/svg-icons/navigation/arrow-downward';
 import Comment from 'material-ui/svg-icons/communication/comment';
 import Remove from 'material-ui/svg-icons/content/clear';
 import Edit from 'material-ui/svg-icons/image/edit';
-import { deletePost, changePostVotescore, selectPost } from '../Actions/Post';
+import { deletePost, changePostVotescore } from '../Actions/Post';
 import {
   deleteComment,
   changeCommentVotescore,
@@ -39,7 +39,6 @@ class CustomCard extends React.Component {
               to={`/${this.props.text.category}/${this.props.id}/edit`}
             />
           }
-          onClick={() => this.props.selectItem(this.props.id)}
         >
           <Edit />
         </IconButton>
@@ -177,11 +176,7 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
       upVote: id => dispatch(changePostVotescore(id, 'upVote')),
       downVote: id => dispatch(changePostVotescore(id, 'downVote')),
-      openItem: id => {
-        dispatch(selectPost(id));
-        dispatch(getComments(id));
-      },
-      selectItem: id => dispatch(selectPost(id)),
+      openItem: id => dispatch(getComments(id)),
       deleteItem: id => dispatch(deletePost(id))
     };
   else

@@ -103,18 +103,12 @@ function categories(state = [], action) {
 }
 
 const initialSelections = {
-  selectedCategory: '',
-  selectedPost: '',
   selectedComment: '',
   selectedSortingMethod: 'Vote score (asc.)'
 };
 
 function selections(state = initialSelections, action) {
   switch (action.type) {
-    case categoryActions.SELECT_CATEGORY:
-      return { ...state, selectedCategory: action.category };
-    case postActions.SELECT_POST:
-      return { ...state, selectedPost: action.id };
     case postActions.UPDATE_SORTING_METHOD:
       return { ...state, selectedSortingMethod: action.method };
     case commentActions.SELECT_COMMENT:

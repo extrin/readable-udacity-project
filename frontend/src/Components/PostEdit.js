@@ -60,8 +60,8 @@ class PostEdit extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  post: state.posts.find(post => post.id === state.selections.selectedPost)
+const mapStateToProps = (state, props) => ({
+  post: state.posts.find(post => post.id === props.match.params.post_id)
 });
 
 const mapDispatchToProps = dispatch => ({

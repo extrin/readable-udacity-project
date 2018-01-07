@@ -6,7 +6,6 @@ export const ADD_POST = 'ADD_POST';
 export const UPDATE_POST = 'UPDATE_POST';
 export const REMOVE_POST = 'REMOVE_POST';
 export const VOTE_ON_POST = 'VOTE_ON_POST';
-export const SELECT_POST = 'SELECT_POST';
 export const UPDATE_SORTING_METHOD = 'UPDATE_SORTING_METHOD';
 
 export const loadPosts = posts => ({
@@ -74,13 +73,6 @@ export const voteOnPost = (id, option) => {
 
 export const changePostVotescore = (id, option) => dispatch => {
   return API.voteOnPost(id, option).then(dispatch(voteOnPost(id, option)));
-};
-
-export const selectPost = id => {
-  return {
-    type: SELECT_POST,
-    id
-  };
 };
 
 export const updateSortingMethod = method => {

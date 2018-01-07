@@ -1,7 +1,6 @@
 import * as API from '../Util/api';
 
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
-export const SELECT_CATEGORY = 'SELECT_CATEGORY';
 
 export const loadCategories = categories => ({
   type: LOAD_CATEGORIES,
@@ -16,8 +15,3 @@ export const getCategories = () => dispatch => {
     })
     .then(categories => dispatch(loadCategories(categories)));
 };
-
-export const selectCategory = category => ({
-  type: SELECT_CATEGORY,
-  category
-});
