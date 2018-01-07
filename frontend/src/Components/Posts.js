@@ -1,24 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateSortingMethod } from '../Actions/Post';
+import sortBy from 'sort-by';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import CustomCard from './CustomCard';
 
 class Posts extends React.Component {
   selectOptions = [
-    { name: 'Vote score (asc.)', value: 'Vote score (asc.)' },
-    { name: 'Vote score (desc.)', value: 'Vote score (desc.)' },
-    { name: 'Timestamp (asc).', value: 'Timestamp (asc).' },
-    { name: 'Timestamp (desc.)', value: 'Timestamp (desc.)' }
+    { value: 'Vote score (asc.)', option: 'voteScore' },
+    { value: 'Vote score (desc.)', option: '-voteScore' },
+    { value: 'Timestamp (asc).', option: 'timestamp' },
+    { value: 'Timestamp (desc.)', option: '-timestamp' }
   ];
 
   render() {
-    const { posts, category, sortingMethodId, changeSorting } = this.props;
+    const { posts, category, sortingMethod, changeSorting } = this.props;
+    console.log(sortingMethod);
+    const sortingOption = this.selectOptions.find(
+      opt => opt.value === sortingMethod
+    ).option;
 
     const filteredPosts = category
       ? posts.filter(post => post.category === category.name)
       : posts;
+
+    const sortedPosts = filteredPosts.sort(sortBy(sortingOption));
 
     return (
       <div className="posts">
@@ -28,21 +35,21 @@ class Posts extends React.Component {
             floatingLabelText="Sort by..."
             className="sort-select"
             value={
-              this.selectOptions.filter(opt => opt.id === sortingMethodId).value
+              this.selectOptions.find(opt => opt.value === sortingMethod).value
             }
-            onChange={event => changeSorting(event.target.value)}
+            onChange={(event, key, payload) => changeSorting(payload)}
           >
             {this.selectOptions.map(opt => (
               <MenuItem
                 value={opt.value}
-                key={opt.name}
+                key={opt.value}
                 primaryText={opt.value}
               />
             ))}
           </SelectField>
         </div>
         <div className="posts-list">
-          {filteredPosts.map(post => (
+          {sortedPosts.map(post => (
             <CustomCard key={post.id} mode="post" id={post.id} />
           ))}
         </div>
@@ -54,7 +61,7 @@ class Posts extends React.Component {
 const mapStateToProps = state => ({
   posts: state.posts,
   category: state.selections.selectedCategory,
-  sortingMethodId: state.selections.selectedSortingMethod
+  sortingMethod: state.selections.selectedSortingMethod
 });
 
 const mapDispatchToProps = dispatch => ({
