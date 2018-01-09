@@ -12,7 +12,7 @@ const store = createStore(
   composeEnhancers(applyMiddleware(ReduxThunk, logger))
 );
 
-getCategories()(store.dispatch);
-getPosts()(store.dispatch);
+store.dispatch(getCategories());
+store.dispatch(getPosts());
 
 export default store;
