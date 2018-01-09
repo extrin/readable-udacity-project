@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getStringDate, trim } from '../Util/Helpers';
+import { getStringDate } from '../Util/Helpers';
 import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
 import Subheader from 'material-ui/Subheader';
@@ -17,8 +17,7 @@ import { deletePost, changePostVotescore } from '../Actions/Post';
 import {
   deleteComment,
   changeCommentVotescore,
-  selectComment,
-  getComments
+  selectComment
 } from '../Actions/Comment';
 import { openCommentEditModal } from '../Actions/Modal';
 
@@ -85,7 +84,6 @@ class CustomCard extends React.Component {
             className="post-title"
             style={{ textDecoration: 'none' }}
             to={`/${this.props.text.category}/${this.props.id}`}
-            onClick={() => this.props.openItem(this.props.id)}
           >
             {this.props.text.title}
           </Link>
@@ -131,7 +129,7 @@ class CustomCard extends React.Component {
               <FlatButton
                 disabled
                 tooltip="Votescore"
-                label={text.voteScore}
+                label={text.voteScore || '0'}
                 labelPosition="after"
                 icon={<Star color="pink" />}
               />
@@ -163,11 +161,10 @@ class CustomCard extends React.Component {
 }
 
 const mapStateToProps = (state, props) => {
-  if (props.mode === 'post')
-    return { text: state.posts.find(post => post.id === props.id) };
+  if (props.mode === 'post') return { text: state.posts[props.id] };
   else
     return {
-      text: state.comments.find(comment => comment.id === props.id)
+      text: state.comments[props.id]
     };
 };
 
@@ -176,7 +173,6 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
       upVote: id => dispatch(changePostVotescore(id, 'upVote')),
       downVote: id => dispatch(changePostVotescore(id, 'downVote')),
-      openItem: id => dispatch(getComments(id)),
       deleteItem: id => dispatch(deletePost(id))
     };
   else

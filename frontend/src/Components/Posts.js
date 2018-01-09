@@ -77,7 +77,7 @@ class Posts extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  posts: state.posts,
+  posts: Object.values(state.posts),
   category: props.match.params.category,
   sortingMethod: state.selections.selectedSortingMethod
 });

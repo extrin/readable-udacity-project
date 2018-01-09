@@ -4,10 +4,13 @@ import * as commentActions from '../Actions/Comment';
 import * as categoryActions from '../Actions/Category';
 import * as modalActions from '../Actions/Modal';
 
-function posts(state = [], action) {
+function posts(state = {}, action) {
   switch (action.type) {
     case postActions.LOAD_POSTS:
-      return action.posts;
+      return action.posts.reduce((accumulator, current) => {
+        accumulator[current.id] = current;
+        return accumulator;
+      }, {});
     case postActions.ADD_POST:
       const post = {
         id: action.id,
@@ -20,44 +23,59 @@ function posts(state = [], action) {
         deleted: false,
         commentCount: 0
       };
-      return state.concat([post]);
+      return { ...state, [action.id]: post };
     case postActions.UPDATE_POST:
-      return state.map(post => {
-        if (post.id === action.id) {
-          post.title = action.title;
-          post.body = action.body;
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          title: action.title,
+          body: action.body
         }
-        return post;
-      });
+      };
     case postActions.REMOVE_POST:
-      return state.filter(post => post.id !== action.id);
+      const key = action.id;
+      const { [key]: value, ...newState } = state;
+      return newState;
     case postActions.VOTE_ON_POST:
-      return state.map(post => {
-        if (post.id === action.id) {
-          if (action.option === 'downVote') post.voteScore--;
-          else post.voteScore++;
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          voteScore:
+            action.option === 'upVote'
+              ? state[action.id].voteScore + 1
+              : state[action.id].voteScore - 1
         }
-        return post;
-      });
+      };
     case commentActions.ADD_COMMENT:
-      return state.map(post => {
-        if (post.id === action.parentId) post.commentCount++;
-        return post;
-      });
+      return {
+        ...state,
+        [action.parentId]: {
+          ...state[action.parentId],
+          commentCount: state[action.parentId].commentCount + 1
+        }
+      };
     case commentActions.REMOVE_COMMENT:
-      return state.map(post => {
-        if (post.id === action.parentId) post.commentCount--;
-        return post;
-      });
+      return {
+        ...state,
+        [action.parentId]: {
+          ...state[action.parentId],
+          commentCount: state[action.parentId].commentCount - 1
+        }
+      };
     default:
       return state;
   }
 }
 
-function comments(state = [], action) {
+function comments(state = {}, action) {
   switch (action.type) {
     case commentActions.LOAD_COMMENTS:
-      return action.comments;
+      return action.comments.reduce((accumulator, current) => {
+        accumulator[current.id] = current;
+        return accumulator;
+      }, {});
     case commentActions.ADD_COMMENT:
       const comment = {
         id: action.id,
@@ -69,25 +87,31 @@ function comments(state = [], action) {
         deleted: false,
         parentDeleted: false
       };
-      return state.concat([comment]);
+      return { ...state, [action.id]: comment };
     case commentActions.UPDATE_COMMENT:
-      return state.map(comment => {
-        if (comment.id === action.id) {
-          comment.body = action.body;
-          comment.timestamp = action.timestamp;
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          body: action.body,
+          timestamp: action.timestamp
         }
-        return comment;
-      });
+      };
     case commentActions.REMOVE_COMMENT:
-      return state.filter(comment => comment.id !== action.id);
+      const key = action.id;
+      const { [key]: value, ...newState } = state;
+      return newState;
     case commentActions.VOTE_ON_COMMENT:
-      return state.map(comment => {
-        if (comment.id === action.id) {
-          if (action.option === 'downVote') comment.voteScore--;
-          else comment.voteScore++;
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          voteScore:
+            action.option === 'upVote'
+              ? state[action.id].voteScore + 1
+              : state[action.id].voteScore - 1
         }
-        return comment;
-      });
+      };
     default:
       return state;
   }
