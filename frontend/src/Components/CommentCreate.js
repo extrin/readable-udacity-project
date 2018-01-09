@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { createComment } from '../Actions/Comment';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { closeCommentCreateModal } from '../Actions/Modal';
 
-class CommentCreate extends Component {
+class CommentCreate extends React.Component {
   state = {
     commentAuthor: '',
     commentBody: ''
@@ -61,9 +61,7 @@ class CommentCreate extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  parentId: state.selections.selectedPost
-});
+const mapStateToProps = (state, props) => ({});
 
 const mapDispatchToProps = dispatch => ({
   addComment: (body, author, parentId) => {
