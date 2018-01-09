@@ -5,7 +5,11 @@ if (!token)
     .toString(36)
     .substr(-8);
 
-const headers = { Authorization: token };
+const headers = {
+  Authorization: token,
+  Accept: 'application/json',
+  'Content-Type': 'application/json'
+};
 const baseUrl = 'http://127.0.0.1:3001';
 
 export const getCategories = () => {
@@ -34,10 +38,18 @@ export const getPost = id => {
 
 export const createPost = (id, timestamp, title, body, author, category) => {
   const endpoint = '/posts';
+  const data = JSON.stringify({
+    id: id,
+    timestamp: timestamp,
+    title: title,
+    body: body,
+    author: author,
+    category: category
+  });
   return fetch(baseUrl + endpoint, {
-    method: 'post',
+    method: 'POST',
     headers: headers,
-    body: `id=${id}&timestamp=${timestamp}&title=${title}&body=${body}&author=${author}&category=${category}`
+    body: data
   })
     .then(res => res.json())
     .then(function(data) {
@@ -50,10 +62,11 @@ export const createPost = (id, timestamp, title, body, author, category) => {
 
 export const voteOnPost = (id, option) => {
   const endpoint = `/posts/${id}`;
+  const data = JSON.stringify({ option: option });
   return fetch(baseUrl + endpoint, {
-    method: 'post',
+    method: 'POST',
     headers: headers,
-    body: `option=${option}`
+    body: data
   })
     .then(res => res.json())
     .then(function(data) {
@@ -66,10 +79,11 @@ export const voteOnPost = (id, option) => {
 
 export const updatePost = (id, title, body) => {
   const endpoint = `/posts/${id}`;
+  const data = JSON.stringify({ title: title, body: body });
   return fetch(baseUrl + endpoint, {
-    method: 'put',
+    method: 'PUT',
     headers: headers,
-    body: `title=${title}&body=${body}`
+    body: data
   })
     .then(res => res.json())
     .then(function(data) {
@@ -83,7 +97,7 @@ export const updatePost = (id, title, body) => {
 export const deletePost = id => {
   const endpoint = `/posts/${id}`;
   return fetch(baseUrl + endpoint, {
-    method: 'delete',
+    method: 'DELETE',
     headers: headers
   })
     .then(res => res.json())
@@ -107,10 +121,17 @@ export const getComment = id => {
 
 export const createComment = (postId, id, timestamp, author, body) => {
   const endpoint = '/comments';
+  const data = JSON.stringify({
+    id: id,
+    timestamp: timestamp,
+    body: body,
+    author: author,
+    parentId: postId
+  });
   return fetch(baseUrl + endpoint, {
-    method: 'post',
+    method: 'POST',
     headers: headers,
-    body: `id=${id}&timestamp=${timestamp}&body=${body}&author=${author}&parentId=${postId}`
+    body: data
   })
     .then(res => res.json())
     .then(function(data) {
@@ -123,10 +144,11 @@ export const createComment = (postId, id, timestamp, author, body) => {
 
 export const voteOnComment = (id, option) => {
   const endpoint = `/comments/${id}`;
+  const data = JSON.stringify({ option: option });
   return fetch(baseUrl + endpoint, {
-    method: 'post',
+    method: 'POST',
     headers: headers,
-    body: `option=${option}`
+    body: data
   })
     .then(res => res.json())
     .then(function(data) {
@@ -139,10 +161,11 @@ export const voteOnComment = (id, option) => {
 
 export const updateComment = (id, timestamp, body) => {
   const endpoint = `/comments/${id}`;
+  const data = JSON.stringify({ timestamp: timestamp, body: body });
   return fetch(baseUrl + endpoint, {
-    method: 'put',
+    method: 'PUT',
     headers: headers,
-    body: `timestamp=${timestamp}&body=${body}`
+    body: data
   })
     .then(res => res.json())
     .then(function(data) {
@@ -156,7 +179,7 @@ export const updateComment = (id, timestamp, body) => {
 export const deleteComment = id => {
   const endpoint = `/comments/${id}`;
   return fetch(baseUrl + endpoint, {
-    method: 'delete',
+    method: 'DELETE',
     headers: headers
   })
     .then(res => res.json())

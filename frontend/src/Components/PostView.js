@@ -7,11 +7,17 @@ import {
   openCommentCreateModal,
   closeCommentCreateModal
 } from '../Actions/Modal';
+import { getComments } from '../Actions/Comment';
 import CommentCreate from './CommentCreate';
 import Comments from './Comments';
 import CustomCard from './CustomCard';
 
 class PostView extends React.Component {
+  componentWillMount = () => {
+    const { loadComments, postId } = this.props;
+    loadComments(postId);
+  };
+
   render() {
     const commentModalOpen = this.props.modalMode === 'opened' ? true : false;
     const { postId, openCommentModal, closeCommentModal } = this.props;
@@ -32,7 +38,7 @@ class PostView extends React.Component {
           onRequestClose={() => closeCommentModal()}
           contentLabel="Modal"
         >
-          <CommentCreate />
+          <CommentCreate parentId={postId} />
         </Modal>
         <div className="post-comments">
           <Comments />
@@ -42,14 +48,15 @@ class PostView extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  postId: state.selections.selectedPost,
+const mapStateToProps = (state, props) => ({
+  postId: props.match.params.post_id,
   modalMode: state.modals.commentCreateModal
 });
 
 const mapDispatchToProps = dispatch => ({
   openCommentModal: () => dispatch(openCommentCreateModal()),
-  closeCommentModal: () => dispatch(closeCommentCreateModal())
+  closeCommentModal: () => dispatch(closeCommentCreateModal()),
+  loadComments: postId => dispatch(getComments(postId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostView);

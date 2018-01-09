@@ -32,7 +32,7 @@ class Comments extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  comments: state.comments,
+  comments: Object.values(state.comments),
   modalMode: state.modals.commentEditModal
 });
 

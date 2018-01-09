@@ -48,13 +48,11 @@ class CommentEdit extends Component {
 }
 
 const mapStateToProps = state => {
-  const comment = state.comments.find(
-    com => com.id === state.selections.selectedComment
-  );
+  const comment = state.comments[state.selections.selectedComment];
   return {
     author: comment.author,
     body: comment.body,
-    id: state.selections.selectedComment
+    id: comment.id
   };
 };
 
