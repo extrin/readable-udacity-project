@@ -7,6 +7,7 @@ import * as modalActions from '../Actions/Modal';
 function posts(state = {}, action) {
   switch (action.type) {
     case postActions.LOAD_POSTS:
+      console.log('inside reducer, load posts');
       return action.posts.reduce((accumulator, current) => {
         accumulator[current.id] = current;
         return accumulator;
@@ -72,6 +73,7 @@ function posts(state = {}, action) {
 function comments(state = {}, action) {
   switch (action.type) {
     case commentActions.LOAD_COMMENTS:
+      console.log('inside reducer, load comments');
       return action.comments.reduce((accumulator, current) => {
         accumulator[current.id] = current;
         return accumulator;
@@ -120,6 +122,7 @@ function comments(state = {}, action) {
 function categories(state = [], action) {
   switch (action.type) {
     case categoryActions.LOAD_CATEGORIES:
+      console.log('inside reducer, load categories');
       return action.categories;
     default:
       return state;
@@ -160,10 +163,31 @@ function modals(
   }
 }
 
+function loading(
+  state = {
+    postsLoaded: false,
+    categoriesLoaded: false,
+    commentsLoaded: false
+  },
+  action
+) {
+  switch (action.type) {
+    case postActions.LOAD_POSTS:
+      return { ...state, postsLoaded: true };
+    case categoryActions.LOAD_CATEGORIES:
+      return { ...state, categoriesLoaded: true };
+    case commentActions.LOAD_COMMENTS:
+      return { ...state, commentsLoaded: true };
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   posts,
   comments,
   categories,
   selections,
-  modals
+  modals,
+  loading
 });
