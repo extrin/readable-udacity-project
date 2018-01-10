@@ -29,7 +29,7 @@ class PostEdit extends Component {
             value={postTitle}
             onChange={event => this.updateTitle(event.target.value)}
             hintText="Post title"
-            errorText={this.value === '' && 'This field is required.'}
+            errorText={postTitle === '' && 'This field is required.'}
             required
           />
           <TextField
@@ -38,7 +38,7 @@ class PostEdit extends Component {
             style={{ width: '95%' }}
             onChange={event => this.updateBody(event.target.value)}
             hintText="Post body"
-            errorText={this.value === '' && 'This field is required.'}
+            errorText={postBody === '' && 'This field is required.'}
             floatingLabelText="Write your post here"
             multiLine={true}
             rows={10}
