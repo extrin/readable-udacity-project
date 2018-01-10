@@ -14,6 +14,7 @@ const baseUrl = 'http://127.0.0.1:3001';
 
 export const getCategories = () => {
   const endpoint = '/categories';
+  console.log('fetch categories');
   return fetch(baseUrl + endpoint, { headers: headers }).then(res =>
     res.json()
   );
@@ -26,6 +27,7 @@ export const getPostsForCategory = category => {
 
 export const getPosts = () => {
   const endpoint = '/posts';
+  console.log('fetch posts');
   return fetch(baseUrl + endpoint, { headers: headers }).then(res =>
     res.json()
   );
