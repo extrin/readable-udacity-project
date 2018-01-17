@@ -7,7 +7,6 @@ import * as modalActions from '../Actions/Modal';
 function posts(state = {}, action) {
   switch (action.type) {
     case postActions.LOAD_POSTS:
-      console.log('inside reducer, load posts');
       return action.posts.reduce((accumulator, current) => {
         accumulator[current.id] = current;
         return accumulator;
@@ -73,7 +72,6 @@ function posts(state = {}, action) {
 function comments(state = {}, action) {
   switch (action.type) {
     case commentActions.LOAD_COMMENTS:
-      console.log('inside reducer, load comments');
       return action.comments.reduce((accumulator, current) => {
         accumulator[current.id] = current;
         return accumulator;
@@ -122,7 +120,6 @@ function comments(state = {}, action) {
 function categories(state = [], action) {
   switch (action.type) {
     case categoryActions.LOAD_CATEGORIES:
-      console.log('inside reducer, load categories');
       return action.categories;
     default:
       return state;
@@ -167,7 +164,7 @@ function loading(
   state = {
     postsLoaded: false,
     categoriesLoaded: false,
-    commentsLoaded: false
+    commentsLoaded: ''
   },
   action
 ) {
@@ -177,7 +174,7 @@ function loading(
     case categoryActions.LOAD_CATEGORIES:
       return { ...state, categoriesLoaded: true };
     case commentActions.LOAD_COMMENTS:
-      return { ...state, commentsLoaded: true };
+      return { ...state, commentsLoaded: action.postId };
     default:
       return state;
   }
