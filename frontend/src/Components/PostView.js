@@ -14,17 +14,15 @@ import CustomCard from './CustomCard';
 
 class PostView extends React.Component {
   componentWillMount = () => {
-    const { loadComments, postId } = this.props;
-    console.log('before loading comments call');
-    loadComments(postId);
-    console.log('after loading comments call');
+    const { loadComments, postId, commentsLoaded } = this.props;
+    if (commentsLoaded !== postId) {
+      loadComments(postId);
+    }
   };
 
   render() {
     const commentModalOpen = this.props.modalMode === 'opened' ? true : false;
     const { postId, openCommentModal, closeCommentModal } = this.props;
-    console.log('start render PostView');
-    console.log(postId);
     return (
       <div className="post-view">
         <CustomCard mode="post" id={postId} />
@@ -52,14 +50,11 @@ class PostView extends React.Component {
   }
 }
 
-const mapStateToProps = (state, props) => {
-  console.log('inside PostView mapStateToProps');
-  console.log(state);
-  return {
-    postId: props.match.params.post_id,
-    modalMode: state.modals.commentCreateModal
-  };
-};
+const mapStateToProps = (state, props) => ({
+  postId: props.match.params.post_id,
+  modalMode: state.modals.commentCreateModal,
+  commentsLoaded: state.loading.commentsLoaded
+});
 
 const mapDispatchToProps = dispatch => ({
   openCommentModal: () => dispatch(openCommentCreateModal()),
