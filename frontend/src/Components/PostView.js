@@ -11,6 +11,7 @@ import { getComments } from '../Actions/Comment';
 import CommentCreate from './CommentCreate';
 import Comments from './Comments';
 import CustomCard from './CustomCard';
+import LoadingSpinner from './LoadingSpinner';
 
 class PostView extends React.Component {
   componentWillMount = () => {
@@ -22,10 +23,19 @@ class PostView extends React.Component {
 
   render() {
     const commentModalOpen = this.props.modalMode === 'opened' ? true : false;
-    const { postId, openCommentModal, closeCommentModal } = this.props;
+    const {
+      postsLoaded,
+      postId,
+      openCommentModal,
+      closeCommentModal
+    } = this.props;
     return (
       <div className="post-view">
-        <CustomCard mode="post" id={postId} />
+        {postsLoaded === true ? (
+          <CustomCard mode="post" id={postId} />
+        ) : (
+          <LoadingSpinner />
+        )}
         <FlatButton
           className="add-comment-btn"
           onClick={() => openCommentModal()}
@@ -53,7 +63,8 @@ class PostView extends React.Component {
 const mapStateToProps = (state, props) => ({
   postId: props.match.params.post_id,
   modalMode: state.modals.commentCreateModal,
-  commentsLoaded: state.loading.commentsLoaded
+  commentsLoaded: state.loading.commentsLoaded,
+  postsLoaded: state.loading.postsLoaded
 });
 
 const mapDispatchToProps = dispatch => ({
