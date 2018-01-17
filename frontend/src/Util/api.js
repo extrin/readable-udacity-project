@@ -14,7 +14,6 @@ const baseUrl = 'http://127.0.0.1:3001';
 
 export const getCategories = () => {
   const endpoint = '/categories';
-  console.log('fetch categories');
   return fetch(baseUrl + endpoint, { headers: headers }).then(res =>
     res.json()
   );
@@ -27,7 +26,6 @@ export const getPostsForCategory = category => {
 
 export const getPosts = () => {
   const endpoint = '/posts';
-  console.log('fetch posts');
   return fetch(baseUrl + endpoint, { headers: headers }).then(res =>
     res.json()
   );
@@ -52,14 +50,7 @@ export const createPost = (id, timestamp, title, body, author, category) => {
     method: 'POST',
     headers: headers,
     body: data
-  })
-    .then(res => res.json())
-    .then(function(data) {
-      console.log('Request succeeded with JSON response', data);
-    })
-    .catch(function(error) {
-      console.log('Request failed', error);
-    });
+  }).then(res => res.json());
 };
 
 export const voteOnPost = (id, option) => {
@@ -69,14 +60,7 @@ export const voteOnPost = (id, option) => {
     method: 'POST',
     headers: headers,
     body: data
-  })
-    .then(res => res.json())
-    .then(function(data) {
-      console.log('Request succeeded with JSON response', data);
-    })
-    .catch(function(error) {
-      console.log('Request failed', error);
-    });
+  }).then(res => res.json());
 };
 
 export const updatePost = (id, title, body) => {
@@ -86,14 +70,7 @@ export const updatePost = (id, title, body) => {
     method: 'PUT',
     headers: headers,
     body: data
-  })
-    .then(res => res.json())
-    .then(function(data) {
-      console.log('Request succeeded with JSON response', data);
-    })
-    .catch(function(error) {
-      console.log('Request failed', error);
-    });
+  }).then(res => res.json());
 };
 
 export const deletePost = id => {
@@ -101,14 +78,7 @@ export const deletePost = id => {
   return fetch(baseUrl + endpoint, {
     method: 'DELETE',
     headers: headers
-  })
-    .then(res => res.json())
-    .then(function(data) {
-      console.log('Request succeeded with JSON response', data);
-    })
-    .catch(function(error) {
-      console.log('Request failed', error);
-    });
+  }).then(res => res.json());
 };
 
 export const getComments = postId => {
@@ -134,14 +104,7 @@ export const createComment = (postId, id, timestamp, author, body) => {
     method: 'POST',
     headers: headers,
     body: data
-  })
-    .then(res => res.json())
-    .then(function(data) {
-      console.log('Request succeeded with JSON response', data);
-    })
-    .catch(function(error) {
-      console.log('Request failed', error);
-    });
+  }).then(res => res.json());
 };
 
 export const voteOnComment = (id, option) => {
@@ -151,14 +114,7 @@ export const voteOnComment = (id, option) => {
     method: 'POST',
     headers: headers,
     body: data
-  })
-    .then(res => res.json())
-    .then(function(data) {
-      console.log('Request succeeded with JSON response', data);
-    })
-    .catch(function(error) {
-      console.log('Request failed', error);
-    });
+  }).then(res => res.json());
 };
 
 export const updateComment = (id, timestamp, body) => {
@@ -168,14 +124,7 @@ export const updateComment = (id, timestamp, body) => {
     method: 'PUT',
     headers: headers,
     body: data
-  })
-    .then(res => res.json())
-    .then(function(data) {
-      console.log('Request succeeded with JSON response', data);
-    })
-    .catch(function(error) {
-      console.log('Request failed', error);
-    });
+  }).then(res => res.json());
 };
 
 export const deleteComment = id => {
@@ -183,12 +132,5 @@ export const deleteComment = id => {
   return fetch(baseUrl + endpoint, {
     method: 'DELETE',
     headers: headers
-  })
-    .then(res => res.json())
-    .then(function(data) {
-      console.log('Request succeeded with JSON response', data);
-    })
-    .catch(function(error) {
-      console.log('Request failed', error);
-    });
+  }).then(res => res.json());
 };
