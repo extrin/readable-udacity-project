@@ -113,7 +113,6 @@ class CustomCard extends React.Component {
 
   render() {
     const { upVote, downVote, id, text } = this.props;
-    console.log('start render CustomCard');
 
     return (
       <div className="wrapper">
@@ -162,8 +161,6 @@ class CustomCard extends React.Component {
 }
 
 const mapStateToProps = (state, props) => {
-  console.log('inside CustomCard mapStateToProps');
-  console.log(state);
   if (props.mode === 'post') return { text: state.posts[props.id] };
   else
     return {
@@ -172,7 +169,6 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch, props) => {
-  console.log('inside CustomCard mapDispatchToProps');
   if (props.mode === 'post')
     return {
       upVote: id => dispatch(changePostVotescore(id, 'upVote')),
