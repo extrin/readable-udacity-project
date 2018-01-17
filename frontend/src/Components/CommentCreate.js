@@ -31,7 +31,7 @@ class CommentCreate extends React.Component {
           onChange={event => this.updateAuthor(event.target.value)}
           floatingLabelText="Enter your nickname"
           hintText="Author name"
-          errorText={this.value === '' && 'This field is required'}
+          errorText={commentAuthor === '' && 'This field is required'}
           required
         />
         <TextField
@@ -42,7 +42,7 @@ class CommentCreate extends React.Component {
           rows={5}
           floatingLabelText="Enter your comment"
           hintText="Comment body"
-          errorText={this.value === '' && 'This field is required'}
+          errorText={commentBody === '' && 'This field is required'}
           required
         />
         <RaisedButton

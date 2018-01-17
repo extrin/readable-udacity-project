@@ -26,7 +26,7 @@ class CommentEdit extends Component {
           rows={5}
           floatingLabelText="Edit your comment here"
           hintText="Your comment"
-          errorText={this.value === '' && 'This field is required'}
+          errorText={this.state.body === '' && 'This field is required'}
           value={this.state.body}
           onChange={event => this.updateBody(event.target.value)}
           required

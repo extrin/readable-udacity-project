@@ -1,32 +1,18 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import '../App.css';
 import CustomAppBar from './CustomAppBar';
-import Posts from './Posts';
-import PostCreate from './PostCreate';
-import PostView from './PostView';
-import PostEdit from './PostEdit';
+import Routes from './Routes';
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <MuiThemeProvider>
         <Router>
           <div className="app">
             <CustomAppBar />
-            <div className="app-body">
-              <Switch>
-                <Route exact path="/create" component={PostCreate} />
-                <Route exact path="/:category?" component={Posts} />
-              </Switch>
-              <Route exact path="/:category/:post_id" component={PostView} />
-              <Route
-                exact
-                path="/:category/:post_id/edit"
-                component={PostEdit}
-              />
-            </div>
+            <Routes />
           </div>
         </Router>
       </MuiThemeProvider>

@@ -103,7 +103,6 @@ class CustomCard extends React.Component {
               to={`/${this.props.text.category}/${this.props.id}`}
             />
           }
-          onClick={() => this.props.openItem(this.props.id)}
           icon={<Comment />}
           label={this.props.text.commentCount || '0'}
           labelPosition="after"
@@ -114,6 +113,7 @@ class CustomCard extends React.Component {
 
   render() {
     const { upVote, downVote, id, text } = this.props;
+
     return (
       <div className="wrapper">
         <Paper zDepth={2}>

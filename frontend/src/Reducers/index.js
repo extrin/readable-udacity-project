@@ -160,10 +160,31 @@ function modals(
   }
 }
 
+function loading(
+  state = {
+    postsLoaded: false,
+    categoriesLoaded: false,
+    commentsLoaded: ''
+  },
+  action
+) {
+  switch (action.type) {
+    case postActions.LOAD_POSTS:
+      return { ...state, postsLoaded: true };
+    case categoryActions.LOAD_CATEGORIES:
+      return { ...state, categoriesLoaded: true };
+    case commentActions.LOAD_COMMENTS:
+      return { ...state, commentsLoaded: action.postId };
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   posts,
   comments,
   categories,
   selections,
-  modals
+  modals,
+  loading
 });
