@@ -21,21 +21,25 @@ class PostView extends React.Component {
     }
   };
 
+  renderPost = () => {
+    const { postsLoaded, postId } = this.props;
+    return postsLoaded ? (
+      <CustomCard mode="post" id={postId} />
+    ) : (
+      <LoadingSpinner />
+    );
+  };
+
   render() {
     const commentModalOpen = this.props.modalMode === 'opened' ? true : false;
     const {
-      postsLoaded,
       postId,
       openCommentCreateModal,
       closeCommentCreateModal
     } = this.props;
     return (
       <div className="post-view">
-        {postsLoaded === true ? (
-          <CustomCard mode="post" id={postId} />
-        ) : (
-          <LoadingSpinner />
-        )}
+        {this.renderPost()}
         <FlatButton
           className="add-comment-btn"
           onClick={() => openCommentCreateModal()}
