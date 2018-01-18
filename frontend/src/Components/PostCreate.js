@@ -28,7 +28,7 @@ class PostCreate extends React.Component {
   };
 
   render() {
-    const { categories, savePost } = this.props;
+    const { categories, createPost } = this.props;
     const { postTitle, postBody, postCategory, postAuthor } = this.state;
 
     return (
@@ -88,7 +88,7 @@ class PostCreate extends React.Component {
             style={{ marginTop: '20px', marginBottom: '10px' }}
             className="post-save-btn"
             onClick={() => {
-              savePost(postTitle, postBody, postAuthor, postCategory);
+              createPost(postTitle, postBody, postAuthor, postCategory);
             }}
             label="SAVE"
             containerElement={<Link to="/" />}
@@ -100,14 +100,8 @@ class PostCreate extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  categories: state.categories
-});
+function mapStateToProps({ categories }) {
+  return { categories };
+}
 
-const mapDispatchToProps = dispatch => ({
-  savePost: (title, body, author, category) => {
-    dispatch(createPost(title, body, author, category));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostCreate);
+export default connect(mapStateToProps, { createPost })(PostCreate);

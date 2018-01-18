@@ -42,7 +42,7 @@ class PostEdit extends Component {
 
   render() {
     const { postTitle, postBody } = this.state;
-    const { post, savePost, postsLoaded } = this.props;
+    const { post, editPost, postsLoaded } = this.props;
 
     return (
       <div className="post-edit">
@@ -74,7 +74,7 @@ class PostEdit extends Component {
             <RaisedButton
               style={{ marginTop: '20px', marginBottom: '10px' }}
               className="post-save-btn"
-              onClick={() => savePost(post.id, postTitle, postBody)}
+              onClick={() => editPost(post.id, postTitle, postBody)}
               containerElement={<Link to={`/${post.category}/${post.id}`} />}
               label="SAVE"
               primary={true}
@@ -93,8 +93,4 @@ const mapStateToProps = (state, props) => ({
   postsLoaded: state.loading.postsLoaded
 });
 
-const mapDispatchToProps = dispatch => ({
-  savePost: (id, title, body) => dispatch(editPost(id, title, body))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostEdit);
+export default connect(mapStateToProps, { editPost })(PostEdit);

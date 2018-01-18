@@ -15,9 +15,9 @@ import LoadingSpinner from './LoadingSpinner';
 
 class PostView extends React.Component {
   componentWillMount = () => {
-    const { loadComments, postId, commentsLoaded } = this.props;
+    const { getComments, postId, commentsLoaded } = this.props;
     if (commentsLoaded !== postId) {
-      loadComments(postId);
+      getComments(postId);
     }
   };
 
@@ -26,8 +26,8 @@ class PostView extends React.Component {
     const {
       postsLoaded,
       postId,
-      openCommentModal,
-      closeCommentModal
+      openCommentCreateModal,
+      closeCommentCreateModal
     } = this.props;
     return (
       <div className="post-view">
@@ -38,7 +38,7 @@ class PostView extends React.Component {
         )}
         <FlatButton
           className="add-comment-btn"
-          onClick={() => openCommentModal()}
+          onClick={() => openCommentCreateModal()}
           label="Add new Comment"
           labelPosition="before"
           icon={<Comment />}
@@ -47,7 +47,7 @@ class PostView extends React.Component {
           className="modal"
           overlayClassName="overlay"
           isOpen={commentModalOpen}
-          onRequestClose={() => closeCommentModal()}
+          onRequestClose={() => closeCommentCreateModal()}
           contentLabel="Modal"
         >
           <CommentCreate parentId={postId} />
@@ -67,10 +67,8 @@ const mapStateToProps = (state, props) => ({
   postsLoaded: state.loading.postsLoaded
 });
 
-const mapDispatchToProps = dispatch => ({
-  openCommentModal: () => dispatch(openCommentCreateModal()),
-  closeCommentModal: () => dispatch(closeCommentCreateModal()),
-  loadComments: postId => dispatch(getComments(postId))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostView);
+export default connect(mapStateToProps, {
+  openCommentCreateModal,
+  closeCommentCreateModal,
+  getComments
+})(PostView);
