@@ -1,12 +1,13 @@
 import * as API from '../Util/api';
 import uuid from 'uuid/v1';
-
-export const LOAD_POSTS = 'LOAD_POSTS';
-export const ADD_POST = 'ADD_POST';
-export const UPDATE_POST = 'UPDATE_POST';
-export const REMOVE_POST = 'REMOVE_POST';
-export const VOTE_ON_POST = 'VOTE_ON_POST';
-export const UPDATE_SORTING_METHOD = 'UPDATE_SORTING_METHOD';
+import {
+  LOAD_POSTS,
+  ADD_POST,
+  UPDATE_POST,
+  REMOVE_POST,
+  VOTE_ON_POST,
+  UPDATE_SORTING_METHOD
+} from './ActionTypes';
 
 export const loadPosts = posts => ({
   type: LOAD_POSTS,

@@ -1,6 +1,5 @@
 import * as API from '../Util/api';
-
-export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+import { LOAD_CATEGORIES } from './ActionTypes';
 
 export const loadCategories = categories => ({
   type: LOAD_CATEGORIES,
