@@ -12,6 +12,7 @@ import CommentCreate from './CommentCreate';
 import Comments from './Comments';
 import CustomCard from './CustomCard';
 import LoadingSpinner from './LoadingSpinner';
+import NotFound from './NotFound';
 
 class PostView extends React.Component {
   componentWillMount = () => {
@@ -34,38 +35,43 @@ class PostView extends React.Component {
     const commentModalOpen = this.props.modalMode === 'opened' ? true : false;
     const {
       postId,
+      postsIds,
       openCommentCreateModal,
       closeCommentCreateModal
     } = this.props;
-    return (
-      <div className="post-view">
-        {this.renderPost()}
-        <FlatButton
-          className="add-comment-btn"
-          onClick={() => openCommentCreateModal()}
-          label="Add new Comment"
-          labelPosition="before"
-          icon={<Comment />}
-        />
-        <Modal
-          className="modal"
-          overlayClassName="overlay"
-          isOpen={commentModalOpen}
-          onRequestClose={() => closeCommentCreateModal()}
-          contentLabel="Modal"
-        >
-          <CommentCreate parentId={postId} />
-        </Modal>
-        <div className="post-comments">
-          <Comments />
+
+    if (postsIds.includes(postId))
+      return (
+        <div className="post-view">
+          {this.renderPost()}
+          <FlatButton
+            className="add-comment-btn"
+            onClick={() => openCommentCreateModal()}
+            label="Add new Comment"
+            labelPosition="before"
+            icon={<Comment />}
+          />
+          <Modal
+            className="modal"
+            overlayClassName="overlay"
+            isOpen={commentModalOpen}
+            onRequestClose={() => closeCommentCreateModal()}
+            contentLabel="Modal"
+          >
+            <CommentCreate parentId={postId} />
+          </Modal>
+          <div className="post-comments">
+            <Comments />
+          </div>
         </div>
-      </div>
-    );
+      );
+    else return <NotFound />;
   }
 }
 
 const mapStateToProps = (state, props) => ({
   postId: props.match.params.post_id,
+  postsIds: state.postsIds,
   modalMode: state.modals.commentCreateModal,
   commentsLoaded: state.loading.commentsLoaded,
   postsLoaded: state.loading.postsLoaded
