@@ -20,8 +20,8 @@ function Categories(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  categories: state.categories
-});
+function mapStateToProps({ categories }) {
+  return { categories };
+}
 
 export default connect(mapStateToProps)(Categories);

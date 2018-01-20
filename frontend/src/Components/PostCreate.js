@@ -9,47 +9,85 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 
 class PostCreate extends React.Component {
-  state = { postTitle: '', postBody: '', postCategory: '', postAuthor: '' };
-
-  updateTitle = title => {
-    this.setState({ postTitle: title });
+  state = {
+    postTitle: '',
+    postBody: '',
+    postCategory: '',
+    postAuthor: '',
+    titleValid: false,
+    bodyValid: false,
+    categoryValid: false,
+    authorValid: false,
+    formValid: false
   };
 
-  updateBody = body => {
-    this.setState({ postBody: body });
+  handleUserInput = (event, payload) => {
+    const name = event.target.name || 'postCategory';
+    const value = payload ? payload : event.target.value;
+    this.setState({ [name]: value }, this.validateField(name, value));
   };
 
-  updateCategory = cat => {
-    this.setState({ postCategory: cat });
-  };
-
-  updateAuthor = author => {
-    this.setState({ postAuthor: author });
+  validateField = (name, value) => {
+    let { titleValid, bodyValid, categoryValid, authorValid } = this.state;
+    switch (name) {
+      case 'postTitle':
+        titleValid = value ? value.length > 0 : false;
+        break;
+      case 'postBody':
+        bodyValid = value ? value.length > 0 : false;
+        break;
+      case 'postCategory':
+        categoryValid = value ? value.length > 0 : false;
+        break;
+      case 'postAuthor':
+        authorValid = value ? value.length > 0 : false;
+        break;
+      default:
+        break;
+    }
+    this.setState({
+      titleValid: titleValid,
+      bodyValid: bodyValid,
+      categoryValid: categoryValid,
+      authorValid: authorValid,
+      formValid: titleValid && bodyValid && categoryValid && authorValid
+    });
   };
 
   render() {
-    const { categories, savePost } = this.props;
-    const { postTitle, postBody, postCategory, postAuthor } = this.state;
+    const { categories, createPost } = this.props;
+    const {
+      postTitle,
+      postBody,
+      postCategory,
+      postAuthor,
+      titleValid,
+      bodyValid,
+      categoryValid,
+      authorValid
+    } = this.state;
 
     return (
       <div className="post-create">
         <Paper zDepth={2}>
           <TextField
             className="post-title"
+            name="postTitle"
             style={{ width: '95%' }}
             value={postTitle}
-            onChange={event => this.updateTitle(event.target.value)}
+            onChange={event => this.handleUserInput(event)}
             hintText="Post title"
-            errorText={postTitle === '' && 'This field is required.'}
+            errorText={!titleValid && 'This field is required.'}
             required
           />
           <TextField
             className="post-body"
+            name="postBody"
             value={postBody}
             style={{ width: '95%' }}
-            onChange={event => this.updateBody(event.target.value)}
+            onChange={event => this.handleUserInput(event)}
             hintText="Post body"
-            errorText={postBody === '' && 'This field is required.'}
+            errorText={!bodyValid && 'This field is required.'}
             floatingLabelText="Write your post here"
             multiLine={true}
             rows={10}
@@ -57,10 +95,13 @@ class PostCreate extends React.Component {
           />
           <SelectField
             className="post-category-select"
+            name="postCategory"
             floatingLabelText="Post category"
-            errorText={postCategory === '' && 'This field is required.'}
+            errorText={!categoryValid && 'This field is required.'}
             value={postCategory}
-            onChange={(event, key, payload) => this.updateCategory(payload)}
+            onChange={(event, key, payload) =>
+              this.handleUserInput(event, payload)
+            }
           >
             <MenuItem
               disabled
@@ -77,22 +118,24 @@ class PostCreate extends React.Component {
           </SelectField>
           <TextField
             className="post-author"
+            name="postAuthor"
             type="text"
             value={postAuthor}
-            onChange={event => this.updateAuthor(event.target.value)}
+            onChange={event => this.handleUserInput(event)}
             hintText="Author nickname"
-            errorText={postAuthor === '' && 'This field is required.'}
+            errorText={!authorValid && 'This field is required.'}
             required
           />
           <RaisedButton
             style={{ marginTop: '20px', marginBottom: '10px' }}
             className="post-save-btn"
             onClick={() => {
-              savePost(postTitle, postBody, postAuthor, postCategory);
+              createPost(postTitle, postBody, postAuthor, postCategory);
             }}
             label="SAVE"
-            containerElement={<Link to="/" />}
+            containerElement={<Link to="/" disabled={!this.state.formValid} />}
             primary={true}
+            disabled={!this.state.formValid}
           />
         </Paper>
       </div>
@@ -100,14 +143,8 @@ class PostCreate extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  categories: state.categories
-});
+function mapStateToProps({ categories }) {
+  return { categories };
+}
 
-const mapDispatchToProps = dispatch => ({
-  savePost: (title, body, author, category) => {
-    dispatch(createPost(title, body, author, category));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostCreate);
+export default connect(mapStateToProps, { createPost })(PostCreate);

@@ -19,8 +19,25 @@ class Posts extends React.Component {
     { value: 'Comment count (desc.)', option: '-commentCount' }
   ];
 
+  renderPostsList = sortedPosts => {
+    if (sortedPosts.length > 0)
+      return (
+        <div className="posts-list">
+          {sortedPosts.map(post => (
+            <CustomCard key={post.id} mode="post" id={post.id} />
+          ))}
+        </div>
+      );
+    else
+      return (
+        <div className="posts-list">
+          <p>Sorry, there are no posts in selected category</p>
+        </div>
+      );
+  };
+
   render() {
-    const { posts, category, sortingMethod, changeSorting } = this.props;
+    const { posts, category, sortingMethod, updateSortingMethod } = this.props;
     const sortingOption = this.selectOptions.find(
       opt => opt.value === sortingMethod
     ).option;
@@ -43,7 +60,7 @@ class Posts extends React.Component {
                 this.selectOptions.find(opt => opt.value === sortingMethod)
                   .value
               }
-              onChange={(event, key, payload) => changeSorting(payload)}
+              onChange={(event, key, payload) => updateSortingMethod(payload)}
             >
               {this.selectOptions.map(opt => (
                 <MenuItem
@@ -54,11 +71,7 @@ class Posts extends React.Component {
               ))}
             </SelectField>
           </div>
-          <div className="posts-list">
-            {sortedPosts.map(post => (
-              <CustomCard key={post.id} mode="post" id={post.id} />
-            ))}
-          </div>
+          {this.renderPostsList(sortedPosts)}
         </div>
         <FloatingActionButton
           className="create-post"
@@ -82,8 +95,4 @@ const mapStateToProps = (state, props) => ({
   sortingMethod: state.selections.selectedSortingMethod
 });
 
-const mapDispatchToProps = dispatch => ({
-  changeSorting: option => dispatch(updateSortingMethod(option))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Posts);
+export default connect(mapStateToProps, { updateSortingMethod })(Posts);

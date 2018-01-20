@@ -1,7 +1,9 @@
-export const OPEN_COMMENT_CREATE_MODAL = 'OPEN_COMMENT_CREATE_MODAL';
-export const CLOSE_COMMENT_CREATE_MODAL = 'CLOSE_COMMENT_CREATE_MODAL';
-export const OPEN_COMMENT_EDIT_MODAL = 'OPEN_COMMENT_EDIT_MODAL';
-export const CLOSE_COMMENT_EDIT_MODAL = 'CLOSE_COMMENT_EDIT_MODAL';
+import {
+  OPEN_COMMENT_CREATE_MODAL,
+  CLOSE_COMMENT_CREATE_MODAL,
+  OPEN_COMMENT_EDIT_MODAL,
+  CLOSE_COMMENT_EDIT_MODAL
+} from './ActionTypes';
 
 export const openCommentCreateModal = () => {
   return {
@@ -26,4 +28,3 @@ export const closeCommentEditModal = () => {
     type: CLOSE_COMMENT_EDIT_MODAL
   };
 };
-

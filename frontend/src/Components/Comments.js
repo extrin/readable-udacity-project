@@ -8,7 +8,7 @@ import { closeCommentEditModal } from '../Actions/Modal';
 
 class Comments extends React.Component {
   render() {
-    const { comments, closeModal, modalMode } = this.props;
+    const { comments, closeCommentEditModal, modalMode } = this.props;
     const editModalOpen = modalMode === 'opened' ? true : false;
     return (
       <div className="comments-list">
@@ -21,7 +21,7 @@ class Comments extends React.Component {
           className="modal"
           overlayClassName="overlay"
           isOpen={editModalOpen}
-          onRequestClose={() => closeModal()}
+          onRequestClose={() => closeCommentEditModal()}
           contentLabel="Modal"
         >
           <CommentEdit />
@@ -36,10 +36,4 @@ const mapStateToProps = state => ({
   modalMode: state.modals.commentEditModal
 });
 
-const mapDispatchToProps = dispatch => ({
-  closeModal: () => {
-    dispatch(closeCommentEditModal());
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Comments);
+export default connect(mapStateToProps, { closeCommentEditModal })(Comments);

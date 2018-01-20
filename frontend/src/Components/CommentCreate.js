@@ -8,41 +8,63 @@ import { closeCommentCreateModal } from '../Actions/Modal';
 class CommentCreate extends React.Component {
   state = {
     commentAuthor: '',
-    commentBody: ''
+    commentBody: '',
+    authorValid: false,
+    bodyValid: false,
+    formValid: false
   };
 
-  updateAuthor = author => {
-    this.setState({ commentAuthor: author });
+  handleUserInput = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({ [name]: value }, this.validateField(name, value));
   };
 
-  updateBody = body => {
-    this.setState({ commentBody: body });
+  validateField = (name, value) => {
+    let { authorValid, bodyValid } = this.state;
+    switch (name) {
+      case 'commentAuthor':
+        authorValid = value ? value.length > 0 : false;
+        break;
+      case 'commentBody':
+        bodyValid = value ? value.length > 0 : false;
+        break;
+      default:
+        break;
+    }
+    this.setState({
+      authorValid: authorValid,
+      bodyValid: bodyValid,
+      formValid: authorValid && bodyValid
+    });
   };
 
   render() {
-    const { commentAuthor, commentBody } = this.state;
+    const { commentAuthor, commentBody, authorValid, bodyValid } = this.state;
     const { addComment, parentId, closeModal } = this.props;
 
     return (
       <div className="comment-create">
         <TextField
           className="comment-author-input"
+          name="commentAuthor"
           value={commentAuthor}
-          onChange={event => this.updateAuthor(event.target.value)}
+          onChange={event => this.handleUserInput(event)}
           floatingLabelText="Enter your nickname"
           hintText="Author name"
-          errorText={commentAuthor === '' && 'This field is required'}
+          errorText={!authorValid && 'This field is required'}
           required
         />
         <TextField
           className="comment-body-input"
+          name="commentBody"
           value={commentBody}
-          onChange={event => this.updateBody(event.target.value)}
+          onChange={event => this.handleUserInput(event)}
           multiLine={true}
           rows={5}
           floatingLabelText="Enter your comment"
           hintText="Comment body"
-          errorText={commentBody === '' && 'This field is required'}
+          errorText={!bodyValid && 'This field is required'}
           required
         />
         <RaisedButton
@@ -55,6 +77,7 @@ class CommentCreate extends React.Component {
           onClick={() => addComment(commentBody, commentAuthor, parentId)}
           label="SAVE"
           secondary={true}
+          disabled={!this.state.formValid}
         />
       </div>
     );

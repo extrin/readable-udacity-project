@@ -12,65 +12,73 @@ import CommentCreate from './CommentCreate';
 import Comments from './Comments';
 import CustomCard from './CustomCard';
 import LoadingSpinner from './LoadingSpinner';
+import NotFound from './NotFound';
 
 class PostView extends React.Component {
   componentWillMount = () => {
-    const { loadComments, postId, commentsLoaded } = this.props;
+    const { getComments, postId, commentsLoaded } = this.props;
     if (commentsLoaded !== postId) {
-      loadComments(postId);
+      getComments(postId);
     }
+  };
+
+  renderPost = () => {
+    const { postsLoaded, postId } = this.props;
+    return postsLoaded ? (
+      <CustomCard mode="post" id={postId} />
+    ) : (
+      <LoadingSpinner />
+    );
   };
 
   render() {
     const commentModalOpen = this.props.modalMode === 'opened' ? true : false;
     const {
-      postsLoaded,
       postId,
-      openCommentModal,
-      closeCommentModal
+      postsIds,
+      openCommentCreateModal,
+      closeCommentCreateModal
     } = this.props;
-    return (
-      <div className="post-view">
-        {postsLoaded === true ? (
-          <CustomCard mode="post" id={postId} />
-        ) : (
-          <LoadingSpinner />
-        )}
-        <FlatButton
-          className="add-comment-btn"
-          onClick={() => openCommentModal()}
-          label="Add new Comment"
-          labelPosition="before"
-          icon={<Comment />}
-        />
-        <Modal
-          className="modal"
-          overlayClassName="overlay"
-          isOpen={commentModalOpen}
-          onRequestClose={() => closeCommentModal()}
-          contentLabel="Modal"
-        >
-          <CommentCreate parentId={postId} />
-        </Modal>
-        <div className="post-comments">
-          <Comments />
+
+    if (postsIds.includes(postId))
+      return (
+        <div className="post-view">
+          {this.renderPost()}
+          <FlatButton
+            className="add-comment-btn"
+            onClick={() => openCommentCreateModal()}
+            label="Add new Comment"
+            labelPosition="before"
+            icon={<Comment />}
+          />
+          <Modal
+            className="modal"
+            overlayClassName="overlay"
+            isOpen={commentModalOpen}
+            onRequestClose={() => closeCommentCreateModal()}
+            contentLabel="Modal"
+          >
+            <CommentCreate parentId={postId} />
+          </Modal>
+          <div className="post-comments">
+            <Comments />
+          </div>
         </div>
-      </div>
-    );
+      );
+    else return <NotFound />;
   }
 }
 
 const mapStateToProps = (state, props) => ({
   postId: props.match.params.post_id,
+  postsIds: state.postsIds,
   modalMode: state.modals.commentCreateModal,
   commentsLoaded: state.loading.commentsLoaded,
   postsLoaded: state.loading.postsLoaded
 });
 
-const mapDispatchToProps = dispatch => ({
-  openCommentModal: () => dispatch(openCommentCreateModal()),
-  closeCommentModal: () => dispatch(closeCommentCreateModal()),
-  loadComments: postId => dispatch(getComments(postId))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostView);
+export default connect(mapStateToProps, {
+  openCommentCreateModal,
+  closeCommentCreateModal,
+  getComments
+})(PostView);
