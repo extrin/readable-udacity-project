@@ -8,14 +8,37 @@ import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
 
 class PostEdit extends Component {
-  state = { postTitle: '', postBody: '' };
-
-  updateTitle = title => {
-    this.setState({ postTitle: title });
+  state = {
+    postTitle: '',
+    postBody: '',
+    titleValid: true,
+    bodyValid: true,
+    formValid: true
   };
 
-  updateBody = body => {
-    this.setState({ postBody: body });
+  handleUserInput = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({ [name]: value }, this.validateField(name, value));
+  };
+
+  validateField = (name, value) => {
+    let { titleValid, bodyValid } = this.state;
+    switch (name) {
+      case 'postTitle':
+        titleValid = value ? value.length > 0 : false;
+        break;
+      case 'postBody':
+        bodyValid = value ? value.length > 0 : false;
+        break;
+      default:
+        break;
+    }
+    this.setState({
+      titleValid: titleValid,
+      bodyValid: bodyValid,
+      formValid: titleValid && bodyValid
+    });
   };
 
   componentWillReceiveProps = nextProps => {
@@ -24,8 +47,8 @@ class PostEdit extends Component {
       this.state.postTitle === '' &&
       this.state.postBody === ''
     ) {
-      this.updateBody(nextProps.post.body);
-      this.updateTitle(nextProps.post.title);
+      this.setState({ postBody: nextProps.post.body });
+      this.setState({ postTitle: nextProps.post.title });
     }
   };
 
@@ -35,13 +58,13 @@ class PostEdit extends Component {
       this.state.postTitle === '' &&
       this.state.postBody === ''
     ) {
-      this.updateBody(this.props.post.body);
-      this.updateTitle(this.props.post.title);
+      this.setState({ postBody: this.props.post.body });
+      this.setState({ postTitle: this.props.post.title });
     }
   };
 
   render() {
-    const { postTitle, postBody } = this.state;
+    const { postTitle, postBody, titleValid, bodyValid } = this.state;
     const { post, editPost, postsLoaded } = this.props;
 
     return (
@@ -50,20 +73,22 @@ class PostEdit extends Component {
           <Paper zDepth={2}>
             <TextField
               className="post-title"
+              name="postTitle"
               style={{ width: '95%' }}
               value={postTitle}
-              onChange={event => this.updateTitle(event.target.value)}
+              onChange={event => this.handleUserInput(event)}
               hintText="Post title"
-              errorText={postTitle === '' && 'This field is required.'}
+              errorText={!titleValid && 'This field is required.'}
               required
             />
             <TextField
               className="post-body"
+              name="postBody"
               value={postBody}
               style={{ width: '95%' }}
-              onChange={event => this.updateBody(event.target.value)}
+              onChange={event => this.handleUserInput(event)}
               hintText="Post body"
-              errorText={postBody === '' && 'This field is required.'}
+              errorText={!bodyValid && 'This field is required.'}
               floatingLabelText="Write your post here"
               multiLine={true}
               rows={10}
@@ -75,9 +100,15 @@ class PostEdit extends Component {
               style={{ marginTop: '20px', marginBottom: '10px' }}
               className="post-save-btn"
               onClick={() => editPost(post.id, postTitle, postBody)}
-              containerElement={<Link to={`/${post.category}/${post.id}`} />}
+              containerElement={
+                <Link
+                  to={`/${post.category}/${post.id}`}
+                  disabled={!this.state.formValid}
+                />
+              }
               label="SAVE"
               primary={true}
+              disabled={!this.state.formValid}
             />
           </Paper>
         ) : (
