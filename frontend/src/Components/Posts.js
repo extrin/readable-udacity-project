@@ -19,6 +19,23 @@ class Posts extends React.Component {
     { value: 'Comment count (desc.)', option: '-commentCount' }
   ];
 
+  renderPostsList = sortedPosts => {
+    if (sortedPosts.length > 0)
+      return (
+        <div className="posts-list">
+          {sortedPosts.map(post => (
+            <CustomCard key={post.id} mode="post" id={post.id} />
+          ))}
+        </div>
+      );
+    else
+      return (
+        <div className="posts-list">
+          <p>Sorry, there are no posts in selected category</p>
+        </div>
+      );
+  };
+
   render() {
     const { posts, category, sortingMethod, updateSortingMethod } = this.props;
     const sortingOption = this.selectOptions.find(
@@ -54,11 +71,7 @@ class Posts extends React.Component {
               ))}
             </SelectField>
           </div>
-          <div className="posts-list">
-            {sortedPosts.map(post => (
-              <CustomCard key={post.id} mode="post" id={post.id} />
-            ))}
-          </div>
+          {this.renderPostsList(sortedPosts)}
         </div>
         <FloatingActionButton
           className="create-post"
