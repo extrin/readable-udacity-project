@@ -6,15 +6,23 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 class CommentEdit extends Component {
-  state = { body: this.props.body };
+  state = { body: this.props.body, bodyValid: true, formValid: true };
 
   updateBody = commentBody => {
-    this.setState({ body: commentBody });
+    this.setState({ body: commentBody }, this.validateForm(commentBody));
+  };
+
+  validateForm = value => {
+    const bodyValid = value ? value.length > 0 : false;
+    this.setState({
+      bodyValid: bodyValid,
+      formValid: bodyValid
+    });
   };
 
   render() {
     const { author, id, saveComment, closeModal } = this.props;
-
+    const { body, bodyValid, formValid } = this.state;
     return (
       <div className="comment-edit">
         <p>
@@ -26,8 +34,8 @@ class CommentEdit extends Component {
           rows={5}
           floatingLabelText="Edit your comment here"
           hintText="Your comment"
-          errorText={this.state.body === '' && 'This field is required'}
-          value={this.state.body}
+          errorText={!bodyValid && 'This field is required'}
+          value={body}
           onChange={event => this.updateBody(event.target.value)}
           required
         />
@@ -38,9 +46,10 @@ class CommentEdit extends Component {
         />
         <RaisedButton
           className="comment-save-btn"
-          onClick={() => saveComment(id, this.state.body)}
+          onClick={() => saveComment(id, body)}
           secondary={true}
           label="SAVE"
+          disabled={!formValid}
         />
       </div>
     );
